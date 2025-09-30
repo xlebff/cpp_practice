@@ -34,7 +34,7 @@ int main() {
             cout << ERROR_MSG << endl;
             --i;
             continue;
-        } else { ; }
+        } else ;
 
         full += price;
     }
@@ -44,7 +44,6 @@ int main() {
 
     if (full >= DISCOUNT_PRICE) {
         total = full * PRICE_DISCOUNT;
-        cout << total;
     } else {
         total = full;
     }
