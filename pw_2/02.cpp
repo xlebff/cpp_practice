@@ -2,6 +2,17 @@
 #include <string>
 using namespace std;
 
+const string mainMsg = "Enter the score for the main test: ",
+            additionaltMsg = "Enter the number of completed additional tasks: ",
+            bonusMsg = "Do you have a bonus point? (0/1): ",
+            finalMsg = "Your final score: ",
+            errorMsg = "Wrong data.",
+            infoMsg = "You have ",
+            badMsg = ". Unsatisfactory..",
+            notbadMsg = ". Satisfactory.",
+            niceMsg = ". Nice!",
+            greatMsg = ". Great!";
+
 char getChoice() {
     char choice;
 
@@ -16,17 +27,6 @@ char getChoice() {
 }
 
 int main() {
-    const string mainMsg = "Enter the score for the main test: ",
-            additionaltMsg = "Enter the number of completed additional tasks: ",
-            bonusMsg = "Do you have a bonus point? (0/1): ",
-            finalMsg = "Your final score: ",
-            errorMsg = "Wrong data.",
-            infoMsg = "You have ",
-            badMsg = ". Unsatisfactory..",
-            notbadMsg = ". Satisfactory.",
-            niceMsg = ". Nice!",
-            greatMsg = ". Great!";
-
     int main, additional, total;
     bool bonus;
     char choice;
@@ -42,9 +42,7 @@ int main() {
             cout << errorMsg;
             choice = getChoice();
             continue;
-        } else {
-            ;
-        }
+        } else continue;
 
         cout << bonusMsg;
         cin >> bonus;

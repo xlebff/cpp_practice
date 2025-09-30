@@ -15,12 +15,12 @@ char getChoice() {
 }
 
 int main() {
-    string helloMsg = "Hello! What`s your age? ",
+    const string helloMsg = "Hello! What`s your age? ",
             ticketMsg = "Cool! Enter your ticket type: ",
             welcomeMsg = "Welcome to the festival!",
             errorMsg = "Sorry, but the ticket doesn't match your age.",
             youngMsg = "Sorry! You`re too young.";
-
+            
     int age, ticketType;
     char choice;
 
@@ -32,9 +32,7 @@ int main() {
             cout << "Liar :(" << endl;
             choice = getChoice();
             continue;
-        } else {
-            ;
-        }
+        } else { ; }
         
         if (age >= 5) {
             cout << ticketMsg;
