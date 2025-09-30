@@ -33,24 +33,26 @@ int main() {
             choice = getChoice();
             continue;
         } else {
-            if (age >= 5) {
-                cout << ticketMsg;
-                cin >> ticketType;
-
-                if (((age >= 5 && age <= 12) && ticketType == 2) ||
-                    ((age >= 13 && age <= 49) && (ticketType == 1 || ticketType == 4)) ||
-                    ((age >= 50 && age <= 64) && (ticketType != 2)) ||
-                    ((age >= 65) && (ticketType == 3 || ticketType == 4))) {
-                    cout << welcomeMsg << endl;
-                } else {
-                    cout << errorMsg << endl;
-                }
-            } else {
-                cout << youngMsg << endl;
-            }
-
-            choice = getChoice();
+            ;
         }
+        
+        if (age >= 5) {
+            cout << ticketMsg;
+            cin >> ticketType;
+
+            if (((age >= 5 && age <= 12) && ticketType == 2) ||
+                ((age >= 13 && age <= 49) && (ticketType == 1 || ticketType == 4)) ||
+                ((age >= 50 && age <= 64) && (ticketType != 2)) ||
+                ((age >= 65) && (ticketType == 3 || ticketType == 4))) {
+                cout << welcomeMsg << endl;
+            } else {
+                cout << errorMsg << endl;
+            }
+        } else {
+            cout << youngMsg << endl;
+        }
+
+        choice = getChoice();
     } while (choice != 'n');
 
     return 0;
