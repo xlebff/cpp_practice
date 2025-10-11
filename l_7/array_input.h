@@ -1,6 +1,4 @@
-#ifndef ARRAY_INPUT_H
-#define ARRAY_INPUT_H
-
+#pragma once
 #include <iostream>
 #include <string>
 
@@ -13,5 +11,3 @@ extern const std::string ERROR_MSG;
 
 void fillArray(int array[], int size);
 void printArray(int array[], int size);
-
-#endif
