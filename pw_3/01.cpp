@@ -19,15 +19,17 @@ const string MENU_MSG =
     "4. Exit\n"
     "Choose option: ";
 const string ADD_VALUE = "Enter the ID of new task: ";
+const string REMOVE_VALUE = "Enter the ID of task to remove: ";
 const string OPERATION_COMPLETED = "The operation is completed!";
 const string SHOW_TASKS = "Your tasks: ";
 
 enum OPTIONS { ADD_TASK = 1, REMOVE_TASK, SHOW_ALL_TASKS, EXIT };
 
 int main() {
-    int *taskList = new int[MIN_CAPACITY];
-    int size = MIN_CAPACITY;
-    clearArray(taskList, size);
+    int capacity = MIN_CAPACITY;
+    int *taskList = new int[capacity];
+    
+    clearArray(taskList, capacity);
 
     cout << endl;
 
@@ -38,20 +40,28 @@ int main() {
             int tmp;
 
             if (!(cin >> tmp)) errorClear();
-            else option = tmp;
+            else cout << ERROR_MSG << endl;
         } while (!option);
 
         cout << endl;
 
         switch (option) {
             case ADD_TASK:
-                size = addUniqValue(ADD_VALUE, taskList, size);
-                cout << OPERATION_COMPLETED << endl << taskList + (size - 1) << endl << *(taskList + (size -1));
+                capacity = addUniqValue(ADD_VALUE, taskList, capacity);
+                cout << OPERATION_COMPLETED << endl;
+                break;
+            case REMOVE_TASK:
+                removeValue(REMOVE_VALUE, taskList, capacity);
+                cout << OPERATION_COMPLETED << endl;
                 break;
             case SHOW_ALL_TASKS:
                 cout << SHOW_TASKS;
-                printExeptValue(taskList, size, 0);
+                printExeptValue(taskList, capacity, 0);
+                cout << endl;
                 break;
+            case EXIT:
+                delete[] taskList;
+                return 0;
             default:
                 cout << ERROR_MSG;
                 break;

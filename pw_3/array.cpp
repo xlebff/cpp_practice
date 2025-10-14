@@ -65,11 +65,18 @@ void printArray(int *array, const int size, bool isReverse) {
 }
 
 void printExeptValue(int *array, const int size, int exeptValue) {
+    bool first = true;
     for (int i = 0; i < size; ++i) {
-        if (array[i] != exeptValue) cout << array[i];
-        else ;
-        if (i + 1 < size && array[i + 1] != 0) cout << TERMINATOR;
-        else ;
+        if (array[i] != exeptValue) {
+            if (!first) {
+                cout << TERMINATOR;
+            }
+            cout << array[i];
+            first = false;
+        }
+    }
+    if (first) {
+        cout << "No tasks";
     }
 }
 
@@ -120,6 +127,7 @@ int* extend(int *array, const int size) {
     for (int i = 0; i < size; ++i) newArray[i] = array[i];
     for (int i = size; i < newCapacity; ++i) newArray[i] = 0;
 
+    delete[] array;
     return newArray;
 }
 
@@ -131,7 +139,7 @@ bool contains(int *array, const int size, const int value) {
     return false;
 }
 
-int addValue(const string msg, int *array, const int size) {
+int addValue(const string msg, int*& array, int& capacity) {
     int newValue = 0;
 
     while (!newValue) {
@@ -143,26 +151,27 @@ int addValue(const string msg, int *array, const int size) {
             cout << ERROR_VAL_MSG << endl;
         } else if (newValue == 0) {
             cout << ABORT << endl;
-            return size;
+            return capacity;
         } else break;
 
         newValue = 0;
     }
 
-    for (int i = 0; i < size; ++i) {
-        if (!array[i]) {
+    for (int i = 0; i < capacity; ++i) {
+        if (array[i] == 0) {
             array[i] = newValue;
-            return size;
-        } else continue;
+            return capacity;
+        }
     }
 
-    array = extend(array, size);
-    int newSize = sizeof(array);
-    array[size] = newValue;
-    return newSize;
+    int oldCapacity = capacity;
+    capacity = oldCapacity * 1.5;
+    array = extend(array, oldCapacity);
+    array[oldCapacity] = newValue;
+    return capacity;
 }
 
-int addUniqValue(const string msg, int *&array, const int size) {
+int addUniqValue(const string msg, int*& array, int& capacity) {
     int newValue = 0;
 
     while (!newValue) {
@@ -172,31 +181,31 @@ int addUniqValue(const string msg, int *&array, const int size) {
             errorClear();
         } else if (newValue == 0) {
             cout << ABORT << endl;
-            return size;
+            return capacity;
         } else if (newValue < 0) {
             cout << ERROR_VAL_MSG << endl;
-        } else if (contains(array, size, newValue)) {
+        } else if (contains(array, capacity, newValue)) {
             cout << ERROR_NOT_UNIQ_MSG << endl;
         } else break;
 
         newValue = 0;
     }
 
-    for (int i = 0; i < size; ++i) {
-        if (!array[i]) {
+    for (int i = 0; i < capacity; ++i) {
+        if (array[i] == 0) {
             array[i] = newValue;
-            return size;
-        } else continue;
+            return capacity;
+        }
     }
 
-    array = extend(array, size);
-    int newSize = sizeof(array);
-    array[size] = newValue;
-    cout << array + (newSize - 1) << endl << *(array + (newSize - 1));
-    return newSize;
+    int oldCapacity = capacity;
+    capacity = oldCapacity * 1.5;
+    array = extend(array, oldCapacity);
+    array[oldCapacity] = newValue;
+    return capacity;
 }
 
-void removeValue(const string msg, int *array, const int size) {
+void removeValue(const string msg, int *array, const int capacity) {
     int valueToRemove = 0;
 
     while (!valueToRemove) {
@@ -209,7 +218,7 @@ void removeValue(const string msg, int *array, const int size) {
             return;
         } else if (valueToRemove < 0) {
             cout << ERROR_VAL_MSG << endl;
-        } else if (!contains(array, size, valueToRemove)) {
+        } else if (!contains(array, capacity, valueToRemove)) {
             cout << ERROR_NOT_FOUND_MSG << endl;
         } else break;
 
@@ -218,17 +227,17 @@ void removeValue(const string msg, int *array, const int size) {
 
     int index = -1;
 
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < capacity; ++i) {
         if (array[i] == valueToRemove) {
             index = i;
             break;
-        } else continue;
+        }
     }
 
-    for (int i = index; i < size; ++i) array[i] = array[i + 1];
-    array[size - 1] = 0;
+    for (int i = index; i < capacity - 1; ++i) array[i] = array[i + 1];
+    array[capacity - 1] = 0;
 }
 
-void clearArray(int *array, const int size) {
-    for (int i = 0; i < size; ++i) array[i] = 0;
+void clearArray(int *array, const int capacity) {
+    for (int i = 0; i < capacity; ++i) array[i] = 0;
 }

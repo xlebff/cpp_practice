@@ -118,20 +118,20 @@ bool contains(int* array, int size, int value);
 /**
  * @brief Добавление значения в массив
  * @param msg Сообщение для ввода
- * @param array Указатель на массив
- * @param size Текущий размер массива
- * @return Новый размер массива
+ * @param array Указатель на массив (передается по ссылке)
+ * @param capacity Емкость массива (передается по ссылке)
+ * @return Новая емкость массива
  */
-int addValue(const std::string msg, int* array, int size);
+int addValue(const std::string msg, int*& array, int& capacity);
 
 /**
  * @brief Добавление уникального значения в массив
  * @param msg Сообщение для ввода
- * @param array Указатель на массив
- * @param size Текущий размер массива
- * @return Новый размер массива
+ * @param array Указатель на массив (передается по ссылке)
+ * @param capacity Емкость массива (передается по ссылке)
+ * @return Новая емкость массива
  */
-int addUniqValue(const std::string msg, int*& array, int size);
+int addUniqValue(const std::string msg, int*& array, int& capacity);
 
 /**
  * @brief Удаление значения из массива
@@ -141,4 +141,4 @@ int addUniqValue(const std::string msg, int*& array, int size);
  */
 void removeValue(const std::string msg, int* array, int size);
 
-void clearArray(int *arrat, const int size);
+void clearArray(int *array, int size);
