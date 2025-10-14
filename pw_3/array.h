@@ -1,12 +1,7 @@
 #pragma once
 #include <string>
 
-// Внешние константы
-extern const int MAX_IGNORE_COUNT;
-extern const char STOP_IGNORE_CHAR;
-
 // Строковые константы
-extern const std::string ERROR_CHAR_MSG;
 extern const std::string ERROR_NUM_MSG;
 extern const std::string AND;
 extern const std::string ERROR_VAL_MSG;
@@ -58,6 +53,8 @@ void fillArray(const std::string element, const std::string colon, int* array, i
  * @param isReverse Флаг обратного порядка вывода
  */
 void printArray(int* array, int size, bool isReverse = false);
+
+void printExeptValue(int *array, const int size, int exeptValue);
 
 /**
  * @brief Вывод массива с подписями элементов
@@ -134,7 +131,7 @@ int addValue(const std::string msg, int* array, int size);
  * @param size Текущий размер массива
  * @return Новый размер массива
  */
-int addUniqValue(const std::string msg, int* array, int size);
+int addUniqValue(const std::string msg, int*& array, int size);
 
 /**
  * @brief Удаление значения из массива
@@ -143,3 +140,5 @@ int addUniqValue(const std::string msg, int* array, int size);
  * @param size Размер массива
  */
 void removeValue(const std::string msg, int* array, int size);
+
+void clearArray(int *arrat, const int size);

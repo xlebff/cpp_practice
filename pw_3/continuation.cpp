@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "continuation.h"
+#include "inputError.h"
 using namespace std;
 
 const string MSG = "Wanna continue? (y/n): ";
@@ -12,7 +13,10 @@ bool getChoice() {
 
     do {
         cout << MSG;
-        cin >> choice;
+        if (!(cin >> choice)) {
+            errorClear();
+            continue;
+        }
         choice = tolower(choice);
     } while (choice != YES && choice != NO);
 

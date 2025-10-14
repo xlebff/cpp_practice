@@ -1,12 +1,9 @@
 #include <iostream>
 #include <string>
 #include "array.h"
+#include "inputError.h"
 using namespace std;
 
-extern const int MAX_IGNORE_COUNT = 1000;
-extern const char STOP_IGNORE_CHAR = '\n';
-
-const string ERROR_CHAR_MSG = "Error: Not a number!";
 const string ERROR_NUM_MSG = "Error: The value must be between ";
 const string AND = " and ";
 const string ERROR_VAL_MSG = "Error: The value must be greater than 0.";
@@ -14,12 +11,6 @@ const string ERROR_NOT_UNIQ_MSG = "Error: The value is already exist.";
 const string ERROR_NOT_FOUND_MSG = "Error: The value is not found.";
 const string ABORT = "Aborting..";
 const string TERMINATOR = ", ";
-
-void errorClear() {
-    cin.clear();
-    cin.ignore(MAX_IGNORE_COUNT, STOP_IGNORE_CHAR);
-    cout << ERROR_CHAR_MSG << endl;
-}
 
 int getSize(const std::string start_msg, const int minValue, const int maxValue) {
     int size = 0;
@@ -73,6 +64,15 @@ void printArray(int *array, const int size, bool isReverse) {
     }
 }
 
+void printExeptValue(int *array, const int size, int exeptValue) {
+    for (int i = 0; i < size; ++i) {
+        if (array[i] != exeptValue) cout << array[i];
+        else ;
+        if (i + 1 < size && array[i + 1] != 0) cout << TERMINATOR;
+        else ;
+    }
+}
+
 void printArray(const std::string element, const std::string colon, int *array, const int size, bool isReverse) {
     if (isReverse) {
         for (int i = size - 1; i >= 0; --i) cout << element << i << colon << array[i] << endl;
@@ -118,8 +118,8 @@ int* extend(int *array, const int size) {
     int *newArray = new int[newCapacity];
 
     for (int i = 0; i < size; ++i) newArray[i] = array[i];
+    for (int i = size; i < newCapacity; ++i) newArray[i] = 0;
 
-    delete[] array;
     return newArray;
 }
 
@@ -137,7 +137,7 @@ int addValue(const string msg, int *array, const int size) {
     while (!newValue) {
         cout << msg;
         
-        if (!cin >> newValue) {
+        if (!(cin >> newValue)) {
             errorClear();
         } else if (newValue < 0) {
             cout << ERROR_VAL_MSG << endl;
@@ -162,19 +162,21 @@ int addValue(const string msg, int *array, const int size) {
     return newSize;
 }
 
-int addUniqValue(const string msg, int *array, const int size) {
+int addUniqValue(const string msg, int *&array, const int size) {
     int newValue = 0;
 
     while (!newValue) {
         cout << msg;
         
-        if (!cin >> newValue) {
+        if (!(cin >> newValue)) {
             errorClear();
         } else if (newValue == 0) {
             cout << ABORT << endl;
             return size;
         } else if (newValue < 0) {
             cout << ERROR_VAL_MSG << endl;
+        } else if (contains(array, size, newValue)) {
+            cout << ERROR_NOT_UNIQ_MSG << endl;
         } else break;
 
         newValue = 0;
@@ -190,6 +192,7 @@ int addUniqValue(const string msg, int *array, const int size) {
     array = extend(array, size);
     int newSize = sizeof(array);
     array[size] = newValue;
+    cout << array + (newSize - 1) << endl << *(array + (newSize - 1));
     return newSize;
 }
 
@@ -199,7 +202,7 @@ void removeValue(const string msg, int *array, const int size) {
     while (!valueToRemove) {
         cout << msg;
         
-        if (!cin >> valueToRemove) {
+        if (!(cin >> valueToRemove)) {
             errorClear();
         } else if (valueToRemove == 0) {
             cout << ABORT << endl;
@@ -224,4 +227,8 @@ void removeValue(const string msg, int *array, const int size) {
 
     for (int i = index; i < size; ++i) array[i] = array[i + 1];
     array[size - 1] = 0;
+}
+
+void clearArray(int *array, const int size) {
+    for (int i = 0; i < size; ++i) array[i] = 0;
 }
