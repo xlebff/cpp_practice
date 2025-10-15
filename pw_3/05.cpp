@@ -13,3 +13,29 @@
 планируемый объём увеличивается на 10% от продаж текущего месяца (округлить до целого).
 Если продажи ниже, планируемый объём равен среднему арифметическому двух значений (за текущий и прошлый год), округленному до целого.
 */
+
+#include <iostream>
+#include <string>
+#include "continuation.h"
+#include "array.h"
+using namespace std;
+
+const int DAYS = 22;
+const string SALES_INPUT_MSG = "Enter salses per day: ";
+const string ELEMENT = "Day ";
+const string COLON = ": ";
+const string AVERAGE_MSG = "Average number of sales: ";
+const string
+
+int main() {
+    int sales[DAYS];
+
+    cout << SALES_INPUT_MSG << endl;
+    fillArray(ELEMENT, COLON, sales, DAYS, 0, 1000000);
+
+    cout << AVERAGE_MSG << getAverage(sales, DAYS) << endl;
+
+    cout <<
+
+    return 0;
+}
