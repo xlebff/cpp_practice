@@ -9,6 +9,7 @@ extern const std::string ERROR_NOT_UNIQ_MSG;
 extern const std::string ERROR_NOT_FOUND_MSG;
 extern const std::string ABORT;
 extern const std::string TERMINATOR;
+extern const std::string NO_VALUES;
 
 // Функции для работы с массивом
 

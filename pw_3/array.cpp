@@ -11,6 +11,7 @@ const string ERROR_NOT_UNIQ_MSG = "Error: The value is already exist.";
 const string ERROR_NOT_FOUND_MSG = "Error: The value is not found.";
 const string ABORT = "Aborting..";
 const string TERMINATOR = ", ";
+const string NO_VALUES = "No values";
 
 int getSize(const std::string start_msg, const int minValue, const int maxValue) {
     int size = 0;
@@ -76,7 +77,7 @@ void printExeptValue(int *array, const int size, int exeptValue) {
         }
     }
     if (first) {
-        cout << "No tasks";
+        cout << NO_VALUES;
     }
 }
 
