@@ -55,7 +55,7 @@ void fillArray(const std::string element, const std::string colon, int* array, i
  */
 void printArray(int* array, int size, bool isReverse = false);
 
-void printExeptValue(int *array, const int size, int exeptValue);
+void printExceptValue(int *array, const int size, int exeptValue);
 
 /**
  * @brief Вывод массива с подписями элементов

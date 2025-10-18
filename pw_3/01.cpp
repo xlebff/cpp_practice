@@ -56,7 +56,7 @@ int main() {
                 break;
             case SHOW_ALL_TASKS:
                 cout << SHOW_TASKS;
-                printExeptValue(taskList, capacity, 0);
+                printExceptValue(taskList, capacity, 0);
                 cout << endl;
                 break;
             case EXIT:

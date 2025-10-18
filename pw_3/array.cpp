@@ -65,7 +65,7 @@ void printArray(int *array, const int size, bool isReverse) {
     }
 }
 
-void printExeptValue(int *array, const int size, int exeptValue) {
+void printExceptValue(int *array, const int size, int exeptValue) {
     bool first = true;
     for (int i = 0; i < size; ++i) {
         if (array[i] != exeptValue) {

@@ -21,21 +21,34 @@
 using namespace std;
 
 const int DAYS = 22;
+const int MAX_SALES = 100000;
+const int MIN_SALES = 10000;
 const string SALES_INPUT_MSG = "Enter salses per day: ";
 const string ELEMENT = "Day ";
 const string COLON = ": ";
 const string AVERAGE_MSG = "Average number of sales: ";
-const string
+const string MAX_SALES_DAYS_MSG = "Days with maximum sales: ";
+const string MIN_SALES_DAYS_MSG = "Days with minimum sales: ";
+const string TOTAL = "Total: ";
+const string COMMA = ", ";
 
 int main() {
     int sales[DAYS];
+    bool first;
 
     cout << SALES_INPUT_MSG << endl;
-    fillArray(ELEMENT, COLON, sales, DAYS, 0, 1000000);
+    fillArray(ELEMENT, COLON, sales, DAYS, 0, 2000000);
 
     cout << AVERAGE_MSG << getAverage(sales, DAYS) << endl;
 
-    cout <<
+    first = true;
+    cout << MAX_SALES_DAYS_MSG;
+    for (int i = 0; i < DAYS; ++i) {
+        if (sales[i] >= MAX_SALES) {
+            cout << (!first ? COMMA : "") << i + 1;
+            first = false;
+        } else continue;
+    }
 
     return 0;
 }
