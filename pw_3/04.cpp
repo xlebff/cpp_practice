@@ -11,20 +11,21 @@
 #include <string>
 #include "array.h"
 #include "continuation.h"
+#include "consts.h"
+using namespace PunctuationMsg;
 using namespace std;
 
 const int HOURS = 24;
 const string REGION_MSG = "Enter the region: ";
 const string FILL_MSG = "Enter the speed: ";
-const string ELEMENT = "Hour ";
-const string COLON = ": ";
 const string AVERAGE_MSG = "Average value: ";
-const string REGIONS = "Regions: ";
-const string DOT = ". ";
 const string ERROR_MSG = "Error: Wrong region.";
 const string MAX_LEGAL_MSG = "Max continuous legal speed interval: ";
 const string MAX_OVERSPEED_MSG = "Max continuous overspeed interval: ";
 const string TOTAL_HOURS_MSG = "Total driving hours: ";
+
+const string ELEMENT = "Hour ";
+const string REGIONS = "Regions: ";
 
 const int REGIONS_SPEEDS[] = {100, 60, 200};
 const int REGIONS_COUNT = 3;
@@ -33,7 +34,6 @@ const string REGION_NAMES[] = {
         "Strange Region", 
         "Fast Region"
     };
-/* enum REGION { COOL_REGION_ID = 1, STRANGE_REGION_ID = 2, FAST_REGION_ID = 3 }; */
 
 int main() {
     do {
@@ -60,7 +60,7 @@ int main() {
         } while (!inp);
 
         cout << FILL_MSG << endl;
-        fillArray(ELEMENT, COLON, speed, HOURS, 0, 240);
+        fillArray(ELEMENT, speed, HOURS, 0, 240);
 
         cout << endl;
 

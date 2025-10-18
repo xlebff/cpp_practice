@@ -2,7 +2,7 @@
 #include <string>
 
 // Строковые константы
-extern const std::string MSG;
+extern const std::string CONTINUATION_CHOICE_MSG;
 extern const char YES;
 extern const char NO;
 

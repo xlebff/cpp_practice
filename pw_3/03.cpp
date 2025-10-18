@@ -15,14 +15,16 @@ Z заменяется на C
 #include <string>
 #include "continuation.h"
 #include "inputError.h"
+#include "consts.h"
+using namespace ErrorMsg;
 using namespace std;
 
 const int CAPACITY = 1000;
 const int LETTERS = 26;
+
 const string START_MSG = "Enter your string: ";
 const string SHIFT_MSG = "Enter shift value: ";
-const string RESULT = "Your string: "; 
-const string ERROR_MSG = "Error: Wrong value!";
+const string RESULT_MSG = "Your string: "; 
 
 int main() {
     do {
@@ -36,12 +38,12 @@ int main() {
         do {
             cout << SHIFT_MSG;
             if (!(cin >> shift)) errorClear();
-            else if (shift <= 0) cout << ERROR_MSG << endl;
+            else if (shift <= 0) cout << ERROR_NEGOTIVE_MSG << endl;
             else break;
             shift = 0;
         } while (!shift);
 
-        for (; currentLength < CAPACITY, str[currentLength]; ++currentLength);
+        for (; str[currentLength]; ++currentLength);
 
         for (int i = 0; i < currentLength; ++i) {
             if (str[i] >= 'A' && str[i] <= 'Z') {
@@ -55,8 +57,9 @@ int main() {
             } else continue;
         }
 
-        cout << RESULT;
+        cout << RESULT_MSG;
         for (int i = 0; i < currentLength; ++i) cout << str[i];
+        cout << endl << endl;
     } while (getChoice());
 
     return 0;

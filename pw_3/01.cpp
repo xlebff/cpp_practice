@@ -6,11 +6,13 @@
 #include <iostream>
 #include "array.h"
 #include "continuation.h"
+#include "consts.h"
+using namespace ErrorMsg;
+using namespace RelatedMsg;
 using namespace std;
 
-const string ERROR_MSG = "Error: The value must be between 1 and 4";
-
 const int MIN_CAPACITY = 5;
+
 const string MENU_MSG = 
     "=== Task Manager ===\n"
     "1. Add task\n"
@@ -18,10 +20,11 @@ const string MENU_MSG =
     "3. Show all tasks\n"
     "4. Exit\n"
     "Choose option: ";
-const string ADD_VALUE = "Enter the ID of new task: ";
-const string REMOVE_VALUE = "Enter the ID of task to remove: ";
-const string OPERATION_COMPLETED = "The operation is completed!";
-const string SHOW_TASKS = "Your tasks: ";
+
+const string ADD_VALUE_MSG = "Enter the ID of new task: ";
+const string REMOVE_VALUE_MSG = "Enter the ID of task to remove: ";
+const string OPERATION_COMPLETED_MSG = "The operation is completed!";
+const string SHOW_TASKS_MSG = "Your tasks: ";
 
 enum OPTIONS { ADD_TASK = 1, REMOVE_TASK, SHOW_ALL_TASKS, EXIT };
 
@@ -40,22 +43,23 @@ int main() {
             int tmp;
 
             if (!(cin >> tmp)) errorClear();
-            else cout << ERROR_MSG << endl;
+            else if (tmp < ADD_TASK || tmp > EXIT) cout << ERROR_INCORRECT_RANGE_MSG << ADD_TASK << AND << EXIT << endl;
+            else option = tmp;
         } while (!option);
 
         cout << endl;
 
         switch (option) {
             case ADD_TASK:
-                capacity = addUniqValue(ADD_VALUE, taskList, capacity);
-                cout << OPERATION_COMPLETED << endl;
+                capacity = addUniqValue(ADD_VALUE_MSG, taskList, capacity);
+                cout << OPERATION_COMPLETED_MSG << endl;
                 break;
             case REMOVE_TASK:
-                removeValue(REMOVE_VALUE, taskList, capacity);
-                cout << OPERATION_COMPLETED << endl;
+                removeValue(REMOVE_VALUE_MSG, taskList, capacity);
+                cout << OPERATION_COMPLETED_MSG << endl;
                 break;
             case SHOW_ALL_TASKS:
-                cout << SHOW_TASKS;
+                cout << SHOW_TASKS_MSG;
                 printExceptValue(taskList, capacity, 0);
                 cout << endl;
                 break;
@@ -63,7 +67,7 @@ int main() {
                 delete[] taskList;
                 return 0;
             default:
-                cout << ERROR_MSG;
+                cout << ERROR_INCORRECT_RANGE_MSG << ADD_TASK << AND << EXIT;
                 break;
         }
 

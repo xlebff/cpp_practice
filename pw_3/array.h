@@ -1,17 +1,8 @@
 #pragma once
 #include <string>
 
-// Строковые константы
-extern const std::string ERROR_NUM_MSG;
-extern const std::string AND;
-extern const std::string ERROR_VAL_MSG;
-extern const std::string ERROR_NOT_UNIQ_MSG;
-extern const std::string ERROR_NOT_FOUND_MSG;
 extern const std::string ABORT;
-extern const std::string TERMINATOR;
 extern const std::string NO_VALUES;
-
-// Функции для работы с массивом
 
 /**
  * @brief Очистка потока ввода после ошибки
@@ -30,22 +21,20 @@ int getSize(const std::string start_msg, int minValue, int maxValue);
 /**
  * @brief Заполнение массива значениями
  * @param element Префикс элемента
- * @param colon Разделитель
  * @param array Указатель на массив
  * @param size Размер массива
  */
-void fillArray(const std::string element, const std::string colon, int* array, int size);
+void fillArray(const std::string element, int* array, int size);
 
 /**
  * @brief Заполнение массива значениями с ограничениями
  * @param element Префикс элемента
- * @param colon Разделитель
  * @param array Указатель на массив
  * @param size Размер массива
  * @param minValue Минимальное допустимое значение
  * @param maxValue Максимальное допустимое значение
  */
-void fillArray(const std::string element, const std::string colon, int* array, int size, int minValue, int maxValue);
+void fillArray(const std::string element, int* array, int size, int minValue, int maxValue);
 
 /**
  * @brief Вывод массива в консоль
@@ -60,12 +49,11 @@ void printExceptValue(int *array, const int size, int exeptValue);
 /**
  * @brief Вывод массива с подписями элементов
  * @param element Префикс элемента
- * @param colon Разделитель
  * @param array Указатель на массив
  * @param size Размер массива
  * @param isReverse Флаг обратного порядка вывода
  */
-void printArray(const std::string element, const std::string colon, int* array, int size, bool isReverse = false);
+void printArray(const std::string element, int* array, int size, bool isReverse = false);
 
 /**
  * @brief Поиск минимального значения в массиве

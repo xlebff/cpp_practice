@@ -2,15 +2,13 @@
 #include <string>
 #include "array.h"
 #include "inputError.h"
+#include "consts.h"
+using namespace ErrorMsg;
+using namespace RelatedMsg;
+using namespace PunctuationMsg;
 using namespace std;
 
-const string ERROR_NUM_MSG = "Error: The value must be between ";
-const string AND = " and ";
-const string ERROR_VAL_MSG = "Error: The value must be greater than 0.";
-const string ERROR_NOT_UNIQ_MSG = "Error: The value is already exist.";
-const string ERROR_NOT_FOUND_MSG = "Error: The value is not found.";
 const string ABORT = "Aborting..";
-const string TERMINATOR = ", ";
 const string NO_VALUES = "No values";
 
 int getSize(const std::string start_msg, const int minValue, const int maxValue) {
@@ -21,7 +19,7 @@ int getSize(const std::string start_msg, const int minValue, const int maxValue)
         if (!(cin >> size)) {
             errorClear();
         } else if ((size < minValue) || (size > maxValue)) {
-            cout << ERROR_NUM_MSG << minValue << AND << maxValue << endl;
+            cout << ERROR_INCORRECT_RANGE_MSG << minValue << AND << maxValue << endl;
         } else break;
 
         size = 0;
@@ -30,9 +28,9 @@ int getSize(const std::string start_msg, const int minValue, const int maxValue)
     return size;
 }
 
-void fillArray(const std::string element, const std::string colon, int *array, const int size) {
+void fillArray(const std::string element, int *array, const int size) {
     for (int i = 0; i < size; ++i) {
-        cout << element << i + 1 << colon;
+        cout << element << i + 1 << COLON;
 
         if (!(cin >> array[i])) {
             errorClear();
@@ -41,14 +39,14 @@ void fillArray(const std::string element, const std::string colon, int *array, c
     }
 }
 
-void fillArray(const std::string element, const std::string colon, int *array, const int size, const int minValue, const int maxValue) {
+void fillArray(const std::string element, int *array, const int size, const int minValue, const int maxValue) {
     for (int i = 0; i < size; ++i) {
-        cout << element << i + 1 << colon;
+        cout << element << i + 1 << COLON;
 
         if (!(cin >> array[i])) {
             errorClear();
         } else if (array[i] < minValue || array[i] > maxValue) {
-            cout << ERROR_NUM_MSG << minValue << AND << maxValue << endl;
+            cout << ERROR_INCORRECT_RANGE_MSG << minValue << AND << maxValue << DOT << endl;
         } else continue;
 
         --i;
@@ -57,11 +55,11 @@ void fillArray(const std::string element, const std::string colon, int *array, c
 
 void printArray(int *array, const int size, bool isReverse) {
     if (isReverse) {
-        for (int i = size -1; i > 0; --i) cout << array[i] << TERMINATOR;
-        cout << array[0] << endl;
+        for (int i = size -1; i > 0; --i) cout << array[i] << COMMA;
+        cout << array[0] << DOT << endl;
     } else {
-        for (int i = 0; i < size - 1; ++i) cout << array[i] << TERMINATOR;
-        cout << array[size - 1] << endl;
+        for (int i = 0; i < size - 1; ++i) cout << array[i] << COMMA;
+        cout << array[size - 1] << DOT << endl;
     }
 }
 
@@ -69,23 +67,21 @@ void printExceptValue(int *array, const int size, int exeptValue) {
     bool first = true;
     for (int i = 0; i < size; ++i) {
         if (array[i] != exeptValue) {
-            if (!first) {
-                cout << TERMINATOR;
-            }
+            if (!first) cout << COMMA;
+            else ;
             cout << array[i];
             first = false;
         }
     }
-    if (first) {
-        cout << NO_VALUES;
-    }
+    if (first) cout << NO_VALUES;
+    else ;
 }
 
-void printArray(const std::string element, const std::string colon, int *array, const int size, bool isReverse) {
+void printArray(const std::string element, int *array, const int size, bool isReverse) {
     if (isReverse) {
-        for (int i = size - 1; i >= 0; --i) cout << element << i << colon << array[i] << endl;
+        for (int i = size - 1; i >= 0; --i) cout << element << i << COLON << array[i] << endl;
     } else {
-        for (int i = 0; i < size; ++i) cout << element << i << colon << array[i] << endl;
+        for (int i = 0; i < size; ++i) cout << element << i << COLON << array[i] << endl;
     }
 }
 
@@ -149,7 +145,7 @@ int addValue(const string msg, int*& array, int& capacity) {
         if (!(cin >> newValue)) {
             errorClear();
         } else if (newValue < 0) {
-            cout << ERROR_VAL_MSG << endl;
+            cout << ERROR_NEGOTIVE_MSG << endl;
         } else if (newValue == 0) {
             cout << ABORT << endl;
             return capacity;
@@ -184,9 +180,9 @@ int addUniqValue(const string msg, int*& array, int& capacity) {
             cout << ABORT << endl;
             return capacity;
         } else if (newValue < 0) {
-            cout << ERROR_VAL_MSG << endl;
+            cout << ERROR_NEGOTIVE_MSG << endl;
         } else if (contains(array, capacity, newValue)) {
-            cout << ERROR_NOT_UNIQ_MSG << endl;
+            cout << ERROR_NOT_UNIQUE_MSG << endl;
         } else break;
 
         newValue = 0;
@@ -218,7 +214,7 @@ void removeValue(const string msg, int *array, const int capacity) {
             cout << ABORT << endl;
             return;
         } else if (valueToRemove < 0) {
-            cout << ERROR_VAL_MSG << endl;
+            cout << ERROR_NEGOTIVE_MSG << endl;
         } else if (!contains(array, capacity, valueToRemove)) {
             cout << ERROR_NOT_FOUND_MSG << endl;
         } else break;

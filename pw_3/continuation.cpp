@@ -4,7 +4,7 @@
 #include "inputError.h"
 using namespace std;
 
-const string MSG = "Wanna continue? (y/n): ";
+const string CONTINUATION_CHOICE_MSG = "Wanna continue? (y/n): ";
 const char YES = 'y';
 const char NO = 'n';
 
@@ -12,7 +12,7 @@ bool getChoice() {
     char choice;
 
     do {
-        cout << MSG;
+        cout << CONTINUATION_CHOICE_MSG;
         if (!(cin >> choice)) {
             errorClear();
             continue;
