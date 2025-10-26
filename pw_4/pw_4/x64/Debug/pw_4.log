@@ -1,2 +1,9 @@
 ﻿  01.cpp
-  pw_4.vcxproj -> C:\Data\Projects\cpp_practice\pw_4\x64\Debug\pw_4.exe
+D:\Data\Programming\Cpp\pw_4\pw_4\cinHandler.h(24,126): error C3861: endl: идентификатор не найден
+  (компиляция исходного файла "01.cpp")
+  
+D:\Data\Programming\Cpp\pw_4\pw_4\cinHandler.h(24,126): error C2065: endl: необъявленный идентификатор
+  (компиляция исходного файла "01.cpp")
+  
+  cinHandler.cpp
+  Создание кода...
