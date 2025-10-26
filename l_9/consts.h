@@ -5,6 +5,8 @@ namespace PunctuationMsg {
     extern const std::string DOT;
     extern const std::string COMMA;
     extern const std::string COLON;
+    extern const std::string SPACE;
+    extern const std::string STICK;
 }
 
 namespace ErrorMsg {
