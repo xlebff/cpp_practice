@@ -1,0 +1,13 @@
+﻿  cinHandler.cpp
+  consts.cpp
+  continuation.cpp
+  main.cpp
+  myMath.cpp
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(94,47): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(108,28): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(111,27): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(114,28): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(117,27): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Data\Programming\Cpp\pw_4\pw_4_1\myMath.cpp(120,28): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  Создание кода...
+  pw_4_1.vcxproj -> D:\Data\Programming\Cpp\pw_4\pw_4_1\x64\Debug\pw_4_1.exe
