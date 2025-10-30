@@ -20,24 +20,24 @@ int main() {
 	const char CALORIES_MSG[] = "Specify the calorie content of each meal: ";
 
 	do {
-		int real_eating_count;
+		int realEatingCount;
 		cout << EATING_COUNT_MSG;
-		getValue(real_eating_count, 0, 50, EATING_COUNT_MSG, ErrorMsg::ERROR_NAN_MSG);
+		getValue(realEatingCount, 0, 50, EATING_COUNT_MSG, ErrorMsg::ERROR_NAN_MSG);
 
-		float* calories = new float[real_eating_count];
-		float total_calories = 0;
+		float* calories = new float[realEatingCount];
+		float totalCalories = 0;
 
 		cout << CALORIES_MSG << endl;
-		for (int i = 0; i < real_eating_count; ++i) {
+		for (int i = 0; i < realEatingCount; ++i) {
 			string element = format("Meal {}: ", i + 1);
 			cout << element;
 			getValue(calories[i], 1.0f, 10000.0f, element.c_str(), ErrorMsg::ERROR_NAN_MSG);
-			total_calories += calories[i];
+			totalCalories += calories[i];
 		}
 
-		isEatingCountNormal(real_eating_count);
+		isEatingCountNormal(realEatingCount);
 
-		isCaloriesNormal(total_calories);
+		if (!isCaloriesNormal(totalCalories)) cout << format("\nThe difference: {}.\n", getCaloriesDifference(totalCalories));
 
 		delete[] calories;
 	} while (getChoice());

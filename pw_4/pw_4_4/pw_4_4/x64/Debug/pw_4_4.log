@@ -1,0 +1,15 @@
+﻿  array.cpp
+D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.cpp(147,28): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+      D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.cpp(147,28):
+      контекст создания экземпляра шаблона (сначала самый старый)
+          D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.h(84,14):
+          выполняется компиляция ссылки на экземпляр шаблон функции "int addValue<int>(const char *,int *&,int &)"
+  
+D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.cpp(186,28): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+      D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.cpp(186,28):
+      контекст создания экземпляра шаблона (сначала самый старый)
+          D:\Data\Programming\Cpp\pw_4\pw_4_4\pw_4_4\array.h(87,14):
+          выполняется компиляция ссылки на экземпляр шаблон функции "int addUniqValue<int>(const char *,int *&,int &)"
+  
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ "float const __cdecl getSum<float const >(float const *,int)" (??$getSum@$$CBM@@YA?BMPEBMH@Z) в функции "float __cdecl getAverage<float const >(float const *,int)" (??$getAverage@$$CBM@@YAMPEBMH@Z).
+D:\Data\Programming\Cpp\pw_4\pw_4_4\x64\Debug\pw_4_4.exe : fatal error LNK1120: неразрешенных внешних элементов: 1

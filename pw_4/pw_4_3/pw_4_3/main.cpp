@@ -39,7 +39,7 @@ int main() {
 
 		float* hourlyEmployeesRate = new float[hourlyEmployees];
 
-		cout << format("Fill out the hourly rate of {} employees.", hourlyEmployees);
+		cout << format("Fill out the hourly rate of {} employees.", hourlyEmployees) << endl;
 		fillArray(EMPLOYEE_MSG, hourlyEmployeesRate, hourlyEmployees, 121.96f, 10000.0f);
 
 		cout << endl;

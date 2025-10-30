@@ -14,6 +14,8 @@ extern const char TOO_LITTLE_CALORIES_MSG[];
 extern const char NORMAL_EATING_COUNT_MSG[];
 extern const char NORMAL_CALORIES_MSG[];
 
+float getCaloriesDifference(float realCalories);
+
 bool isEatingCountNormal(int eating_count);
 
 bool isCaloriesNormal(float calories);

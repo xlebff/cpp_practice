@@ -16,6 +16,10 @@ const char TOO_LITTLE_CALORIES_MSG[] = "Warning: The amount of calories consumed
 const char NORMAL_EATING_COUNT_MSG[] = "The number of meals is normal.";
 const char NORMAL_CALORIES_MSG[] = "The number of calories consumed is normal.";
 
+float getCaloriesDifference(float realCalories) {
+	return fabsf(TARGET_CALORIES_COUNT - realCalories);
+}
+
 bool isEatingCountNormal(int eating_count) {
 	if (eating_count > LARGEST_EATING_COUNT) cout << TOO_MANY_EATING_COUNT_MSG << endl;
 	else if (eating_count < LOWEST_EATING_COUNT) cout << TOO_LITTLE_EATING_COUNT_MSG << endl;
