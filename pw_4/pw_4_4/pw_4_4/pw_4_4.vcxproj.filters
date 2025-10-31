@@ -24,9 +24,6 @@
     <ClCompile Include="continuation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="array.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="cinHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>

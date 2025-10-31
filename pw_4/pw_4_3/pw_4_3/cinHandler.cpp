@@ -59,7 +59,7 @@ void getValue(T& variable, T minValue, T maxValue, const char* msg, const char* 
     while (!valid) {
         if (!(cin >> variable)) {
             errorClear();
-            cout << errorMsg << endl << msg;
+            cout << "errorMsg" << endl << msg;
             continue;
         }
         else if (variable < minValue || variable >= maxValue) {

@@ -22,5 +22,5 @@ namespace ErrorMsg {
 namespace RelatedMsg {
     const char AND[] = " and ";
     const char SPACE = ' ';
-    const char SEPARATOR[] = "\n=========\n";
+    const char SEPARATOR[] = "============";
 }

@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="array.cpp" />
     <ClCompile Include="cinHandler.cpp" />
     <ClCompile Include="consts.cpp" />
     <ClCompile Include="continuation.cpp" />

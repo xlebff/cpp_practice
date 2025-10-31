@@ -15,6 +15,7 @@
 #include <format>
 #include "cinHandler.h"
 #include "array.h"
+#include "consts.h"
 #include "continuation.h"
 
 using namespace std;
@@ -24,8 +25,11 @@ int main() {
 	const int HOURS_OF_WORK = 160;
 
 	const char EMPLOYEE_MSG[] = "Employee ";
+	const char HOURLY_COUNT_MSG[] = "Enter the number of employees with hourly pay : ";
 
 	do {
+		cout << RelatedMsg::SEPARATOR << endl << endl;
+
 		float fixEmployeesRate[FIX_EMPLOYEES_COUNT];
 
 		cout << format("Fill out the fixed rates for {} employees.", FIX_EMPLOYEES_COUNT) << endl;
@@ -34,8 +38,8 @@ int main() {
 		cout << endl;
 
 		int hourlyEmployees;
-		cout << "Enter the number of employees with hourly pay: ";
-		getValue(hourlyEmployees, 0, 10000, "Enter the number of employees with hourly pay: ", "Error: Not a number.");
+		cout << HOURLY_COUNT_MSG;
+		getValue(hourlyEmployees, 0, 10000, HOURLY_COUNT_MSG, ErrorMsg::ERROR_NAN_MSG);
 
 		float* hourlyEmployeesRate = new float[hourlyEmployees];
 
@@ -79,6 +83,8 @@ int main() {
 		cout << endl << "The number of hourly employees whose salary is below the minimum fixed rate in the company: " << notCoolHourlyEmployees << endl;
 
 		delete[] hourlyEmployeesRate;
+
+		cout << endl << RelatedMsg::SEPARATOR << endl << endl;
 
 	} while (getChoice());
 

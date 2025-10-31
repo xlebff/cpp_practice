@@ -12,12 +12,13 @@
 #include <iostream>
 #include "cinHandler.h"
 #include "array.h"
+#include "continuation.h"
 #include "consts.h"
 
 using namespace std;
 
 const int MAX_NUMBER_OF_DAYS = 31;
-const float OCTOBER_LAST_YEAR[] = {
+const int OCTOBER_LAST_YEAR[] = {
     12, 10, 8, 7, 9, 11, 13, 14, 12, 10,
     9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
     -1, -2, 1, 3, 5, 7, 9, 11, 10, 8, 6
@@ -26,30 +27,82 @@ const float OCTOBER_LAST_YEAR[] = {
 const char NUMBER_OF_DAYS_MSG[] = "Specify the number of analyzed days: ";
 
 int main() {
-    int analyzingDays;
-    cout << NUMBER_OF_DAYS_MSG;
-    getValue(analyzingDays, 1, MAX_NUMBER_OF_DAYS + 1, NUMBER_OF_DAYS_MSG, ErrorMsg::ERROR_NAN_MSG);
+    do {
+        cout << RelatedMsg::SEPARATOR << endl;
 
-    int* temperatures = new int[analyzingDays];
+        int analyzingDays;
+        cout << NUMBER_OF_DAYS_MSG;
+        getValue<int>(analyzingDays, 1, MAX_NUMBER_OF_DAYS + 1, NUMBER_OF_DAYS_MSG, ErrorMsg::ERROR_NAN_MSG);
 
-    cout << endl << "Enter the temperature for each analyzed day:" << endl;
-    fillArray("Day ", temperatures, analyzingDays, -100, 100);
+        int* temperatures = new int[analyzingDays];
 
-    float lastYearAverage = getAverage(OCTOBER_LAST_YEAR, analyzingDays);
-    float thisYearAverage = getAverage(temperatures, analyzingDays);
+        cout << endl << "Enter the temperature for each analyzed day:" << endl;
+        fillArray<int>("Day ", temperatures, analyzingDays, -100, 100);
 
-    if (lastYearAverage > thisYearAverage) {
-        cout << "October of last year is warmer." << endl <<
-            "The difference is " << (lastYearAverage - thisYearAverage) << "⁰C." << endl;
-    }
-    else if (thisYearAverage > lastYearAverage) {
-        cout << "October is warmer this year." << endl <<
-            "The difference is " << (thisYearAverage - lastYearAverage) << "⁰C." << endl;
-    }
-    else cout << "The temperature is the same." << endl;
+        cout << endl;
 
+        float lastYearAverage = getAverage(OCTOBER_LAST_YEAR, analyzingDays);
+        float thisYearAverage = getAverage(temperatures, analyzingDays);
 
+        float difference = fabsf(round((lastYearAverage - thisYearAverage) * 1000) / 1000);
 
-    delete[] temperatures;
+        if (lastYearAverage > thisYearAverage)
+            cout << "October of last year is warmer." << endl <<
+            "The difference is " << difference << " degree." << endl;
+        else if (thisYearAverage > lastYearAverage)
+            cout << "October is warmer this year." << endl <<
+            "The difference is " << difference << " degree." << endl;
+        else
+            cout << "The temperature is the same." << endl;
+
+        if (difference >= 5) cout << "Warning! High temperature difference." << endl;
+        else;
+
+        cout << endl;
+
+        int lastYearMax = getMaxValue(OCTOBER_LAST_YEAR, analyzingDays);
+        int thisYearMax = getMaxValue(temperatures, analyzingDays);
+
+        int lastYearMin = getMinValue(OCTOBER_LAST_YEAR, analyzingDays);
+        int thisYearMin = getMinValue(temperatures, analyzingDays);
+
+        if (lastYearMax > thisYearMax)
+            cout << "The maximum temperature of last year is higher than the current one." << endl;
+        else if (thisYearMax > lastYearMax)
+            cout << "The maximum temperature of this year is higher than the last one." << endl;
+        else
+            cout << "The maximum temperatures are the same." << endl;
+
+        if (lastYearMin < thisYearMin)
+            cout << "The minimum temperature of last year is lower than the current one." << endl;
+        else if (thisYearMin < lastYearMin)
+            cout << "The minimum temperature of this year is lower than the last one." << endl;
+        else
+            cout << "The minimum temperatures are the same." << endl;
+
+        int lastYearBelow0 = 0;
+        int thisYearBelow0 = 0;
+        for (int i = 0; i < analyzingDays; ++i) {
+            if (OCTOBER_LAST_YEAR[i] < 0) ++lastYearBelow0;
+            else;
+
+            if (temperatures[i] < 0) ++thisYearBelow0;
+            else;
+        }
+
+        cout << endl;
+
+        cout << "The number of days when the temperature was below 0 last October: "
+            << lastYearBelow0 << endl;
+
+        cout << "The number of days when the temperature was below 0 this October: "
+            << thisYearBelow0 << endl;
+
+        cout << endl << RelatedMsg::SEPARATOR << endl;
+
+        delete[] temperatures;
+
+    } while (getChoice());
+
 	return 0;
 }
