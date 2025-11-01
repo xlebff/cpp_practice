@@ -7,11 +7,12 @@
 
 using namespace std;
 
-const string EXPRESSION_MSG = "Enter the expression (e.g., 5 + 3, 5!, ~5, 5 & 3): ";
-const string WRONG_EXPRESSION_MSG = "Wrong expression.";
-const string RESULT_MSG = "Result: ";
 
 int main() {
+    const char EXPRESSION_MSG[] = "Enter the expression (e.g., 5 + 3, 5!, ~5, 5 & 3): ";
+    const char WRONG_EXPRESSION_MSG[] = "Wrong expression.";
+    const char RESULT_MSG[] = "Result: ";
+
     float num1 = 0, num2 = 0;
     char sign;
     float result = 0;

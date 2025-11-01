@@ -1,15 +1,4 @@
-﻿/* Написать программу для анализа температуры в городе за октябрь. 
-В программе используются данные за 2 месяца – октябрь прошлого года (данные известны) и 
-октябрь текущего года (данные и количество анализируемых дней вводятся пользователем, 
-но не должны превышать количество дней месяца). Программа должна:
-Определить, какой из месяцев был теплее по средней температуре, и вывести соответствующее сообщение.
-Проверить, есть ли разница в средних температурах более 5°C. Если есть – вывести предупреждение о высоком перепаде температур.
-Сравнить максимальную и минимальную температуры за разные года и вывести соответствующее сообщение.
-Подсчитать и вывести количество дней, когда температура была ниже 0, для каждого месяца.
-Программа должна быть зациклена до тех пор, пока пользователь не решит выйти. 
-Разделите программу на 3 файла: main.cpp; .h, где будут объявления функций; .cpp, где будут определения функций. */
-
-#include <iostream>
+﻿#include <iostream>
 #include "cinHandler.h"
 #include "array.h"
 #include "continuation.h"
@@ -17,16 +6,32 @@
 
 using namespace std;
 
-const int MAX_NUMBER_OF_DAYS = 31;
-const int OCTOBER_LAST_YEAR[] = {
-    12, 10, 8, 7, 9, 11, 13, 14, 12, 10,
-    9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
-    -1, -2, 1, 3, 5, 7, 9, 11, 10, 8, 6
-};
-
-const char NUMBER_OF_DAYS_MSG[] = "Specify the number of analyzed days: ";
-
 int main() {
+    const int MAX_NUMBER_OF_DAYS = 31;
+    const int OCTOBER_LAST_YEAR[] = {
+        12, 10, 8, 7, 9, 11, 13, 14, 12, 10,
+        9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+        -1, -2, 1, 3, 5, 7, 9, 11, 10, 8, 6
+    };
+
+    const char NUMBER_OF_DAYS_MSG[] = "Specify the number of analyzed days: ";
+    const char TEMPERATURES_MSG[] = "Enter the temperature for each analyzed day:";
+    const char DAY_PREFIX[] = "Day ";
+    const char LAST_YEAR_WARMER_MSG[] = "October of last year is warmer.";
+    const char THIS_YEAR_WARMER_MSG[] = "October is warmer this year.";
+    const char TEMPERATURE_SAME_MSG[] = "The temperature is the same.";
+    const char DIFFERENCE_MSG[] = "The difference is ";
+    const char DEGREE_MSG[] = " degree.";
+    const char WARNING_MSG[] = "Warning! High temperature difference.";
+    const char LAST_YEAR_MAX_HIGHER_MSG[] = "The maximum temperature of last year is higher than the current one.";
+    const char THIS_YEAR_MAX_HIGHER_MSG[] = "The maximum temperature of this year is higher than the last one.";
+    const char MAX_TEMP_SAME_MSG[] = "The maximum temperatures are the same.";
+    const char LAST_YEAR_MIN_LOWER_MSG[] = "The minimum temperature of last year is lower than the current one.";
+    const char THIS_YEAR_MIN_LOWER_MSG[] = "The minimum temperature of this year is lower than the last one.";
+    const char MIN_TEMP_SAME_MSG[] = "The minimum temperatures are the same.";
+    const char LAST_YEAR_BELOW_0_MSG[] = "The number of days when the temperature was below 0 last October: ";
+    const char THIS_YEAR_BELOW_0_MSG[] = "The number of days when the temperature was below 0 this October: ";
+
     do {
         cout << RelatedMsg::SEPARATOR << endl;
 
@@ -36,8 +41,8 @@ int main() {
 
         int* temperatures = new int[analyzingDays];
 
-        cout << endl << "Enter the temperature for each analyzed day:" << endl;
-        fillArray<int>("Day ", temperatures, analyzingDays, -100, 100);
+        cout << endl << TEMPERATURES_MSG << endl;
+        fillArray<int>(DAY_PREFIX, temperatures, analyzingDays, -100, 100);
 
         cout << endl;
 
@@ -47,15 +52,15 @@ int main() {
         float difference = fabsf(round((lastYearAverage - thisYearAverage) * 1000) / 1000);
 
         if (lastYearAverage > thisYearAverage)
-            cout << "October of last year is warmer." << endl <<
-            "The difference is " << difference << " degree." << endl;
+            cout << LAST_YEAR_WARMER_MSG << endl <<
+            DIFFERENCE_MSG << difference << DEGREE_MSG << endl;
         else if (thisYearAverage > lastYearAverage)
-            cout << "October is warmer this year." << endl <<
-            "The difference is " << difference << " degree." << endl;
+            cout << THIS_YEAR_WARMER_MSG << endl <<
+            DIFFERENCE_MSG << difference << DEGREE_MSG << endl;
         else
-            cout << "The temperature is the same." << endl;
+            cout << TEMPERATURE_SAME_MSG << endl;
 
-        if (difference >= 5) cout << "Warning! High temperature difference." << endl;
+        if (difference >= 5) cout << WARNING_MSG << endl;
         else;
 
         cout << endl;
@@ -67,18 +72,18 @@ int main() {
         int thisYearMin = getMinValue(temperatures, analyzingDays);
 
         if (lastYearMax > thisYearMax)
-            cout << "The maximum temperature of last year is higher than the current one." << endl;
+            cout << LAST_YEAR_MAX_HIGHER_MSG << endl;
         else if (thisYearMax > lastYearMax)
-            cout << "The maximum temperature of this year is higher than the last one." << endl;
+            cout << THIS_YEAR_MAX_HIGHER_MSG << endl;
         else
-            cout << "The maximum temperatures are the same." << endl;
+            cout << MAX_TEMP_SAME_MSG << endl;
 
         if (lastYearMin < thisYearMin)
-            cout << "The minimum temperature of last year is lower than the current one." << endl;
+            cout << LAST_YEAR_MIN_LOWER_MSG << endl;
         else if (thisYearMin < lastYearMin)
-            cout << "The minimum temperature of this year is lower than the last one." << endl;
+            cout << THIS_YEAR_MIN_LOWER_MSG << endl;
         else
-            cout << "The minimum temperatures are the same." << endl;
+            cout << MIN_TEMP_SAME_MSG << endl;
 
         int lastYearBelow0 = 0;
         int thisYearBelow0 = 0;
@@ -92,10 +97,10 @@ int main() {
 
         cout << endl;
 
-        cout << "The number of days when the temperature was below 0 last October: "
+        cout << LAST_YEAR_BELOW_0_MSG
             << lastYearBelow0 << endl;
 
-        cout << "The number of days when the temperature was below 0 this October: "
+        cout << THIS_YEAR_BELOW_0_MSG
             << thisYearBelow0 << endl;
 
         cout << endl << RelatedMsg::SEPARATOR << endl;
@@ -104,5 +109,5 @@ int main() {
 
     } while (getChoice());
 
-	return 0;
+    return 0;
 }

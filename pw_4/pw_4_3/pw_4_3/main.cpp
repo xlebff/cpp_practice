@@ -1,15 +1,3 @@
-/* Написать программу для расчета заработной платы сотрудников. 
-В компании есть сотрудники с разными типами оплаты: фиксированная ставка и почасовая оплата. 
-По фиксированной ставке в компании работает 15 сотрудников, для каждого из которых определена своя ставка. 
-Количество сотрудников на почасовой оплате ежемесячно изменяется (для каждого также определена своя ставка). 
-Программа должна подсчитать и вывести:
-Общий фонд заработной платы на месяц для всех сотрудников.
-Какой тип оплаты в текущем месяце потребовал больший бюджет? (вывести сумму).
-Количество сотрудников с заработком выше среднего по всей компании.
-Для почасовых сотрудников вывести количество тех, чья зарплата ниже минимальной фиксированной ставки в компании.
-Программа должна быть зациклена до тех пор, пока пользователь не решит выйти. 
-Разделите программу на 3 файла: main.cpp; .h, где будут объявления функций; .cpp, где будут определения функций.*/
-
 #include <iostream>
 #include <string>
 #include <format>
@@ -21,72 +9,76 @@
 using namespace std;
 
 int main() {
-	const int FIX_EMPLOYEES_COUNT = 15;
-	const int HOURS_OF_WORK = 160;
+    const char EMPLOYEE_MSG[] = "Employee ";
+    const char HOURLY_COUNT_MSG[] = "Enter the number of employees with hourly pay : ";
+    const char TOTAL_SALARY_FUND_MSG[] = "Total salary fund: ";
+    const char SALARIES_SAME_MSG[] = "The salaries of fixed and hourly workers are the same.";
+    const char COOL_EMPLOYEES_MSG[] = "The number of employees with earnings above the average throughout the company: ";
+    const char NOT_COOL_HOURLY_MSG[] = "The number of hourly employees whose salary is below the minimum fixed rate in the company: ";
 
-	const char EMPLOYEE_MSG[] = "Employee ";
-	const char HOURLY_COUNT_MSG[] = "Enter the number of employees with hourly pay : ";
+    const int FIX_EMPLOYEES_COUNT = 15;
+    const int HOURS_OF_WORK = 160;
 
-	do {
-		cout << RelatedMsg::SEPARATOR << endl << endl;
+    do {
+        cout << RelatedMsg::SEPARATOR << endl << endl;
 
-		float fixEmployeesRate[FIX_EMPLOYEES_COUNT];
+        float fixEmployeesRate[FIX_EMPLOYEES_COUNT];
 
-		cout << format("Fill out the fixed rates for {} employees.", FIX_EMPLOYEES_COUNT) << endl;
-		fillArray(EMPLOYEE_MSG, fixEmployeesRate, FIX_EMPLOYEES_COUNT, 22440.0f, 1000000.0f);
+        cout << format("Fill out the fixed rates for {} employees.", FIX_EMPLOYEES_COUNT) << endl;
+        fillArray(EMPLOYEE_MSG, fixEmployeesRate, FIX_EMPLOYEES_COUNT, 22440.0f, 1000000.0f);
 
-		cout << endl;
+        cout << endl;
 
-		int hourlyEmployees;
-		cout << HOURLY_COUNT_MSG;
-		getValue(hourlyEmployees, 0, 10000, HOURLY_COUNT_MSG, ErrorMsg::ERROR_NAN_MSG);
+        int hourlyEmployees;
+        cout << HOURLY_COUNT_MSG;
+        getValue(hourlyEmployees, 0, 10000, HOURLY_COUNT_MSG, ErrorMsg::ERROR_NAN_MSG);
 
-		float* hourlyEmployeesRate = new float[hourlyEmployees];
+        float* hourlyEmployeesRate = new float[hourlyEmployees];
 
-		cout << format("Fill out the hourly rate of {} employees.", hourlyEmployees) << endl;
-		fillArray(EMPLOYEE_MSG, hourlyEmployeesRate, hourlyEmployees, 121.96f, 10000.0f);
+        cout << format("Fill out the hourly rate of {} employees.", hourlyEmployees) << endl;
+        fillArray(EMPLOYEE_MSG, hourlyEmployeesRate, hourlyEmployees, 121.96f, 10000.0f);
 
-		cout << endl;
+        cout << endl;
 
-		float fixEmployeesFund = getSum(fixEmployeesRate, FIX_EMPLOYEES_COUNT);
-		float hourlyEmployeesFund = getSum(hourlyEmployeesRate, hourlyEmployees) * HOURS_OF_WORK;
+        float fixEmployeesFund = getSum(fixEmployeesRate, FIX_EMPLOYEES_COUNT);
+        float hourlyEmployeesFund = getSum(hourlyEmployeesRate, hourlyEmployees) * HOURS_OF_WORK;
 
-		float salaryFund = fixEmployeesFund + hourlyEmployeesFund;
-		cout << "Total salary fund: " << salaryFund << endl;
+        float salaryFund = fixEmployeesFund + hourlyEmployeesFund;
+        cout << TOTAL_SALARY_FUND_MSG << salaryFund << endl;
 
-		cout << endl;
+        cout << endl;
 
-		if (fixEmployeesFund > hourlyEmployeesFund)
-			cout << format("The {} fund required a larger budget ({}, {} more than the {} one).",
-				"fixed", fixEmployeesFund, fixEmployeesFund - hourlyEmployeesFund, "hourly");
-		else if (fixEmployeesFund < hourlyEmployeesFund)
-			cout << format("The {} fund required a larger budget ({}, {} more than the {} one).",
-				"hourly", hourlyEmployeesFund, hourlyEmployeesFund - fixEmployeesFund, "fixed");
-		else cout << "The salaries of fixed and hourly workers are the same.";
-		cout << endl;
+        if (fixEmployeesFund > hourlyEmployeesFund)
+            cout << format("The {} fund required a larger budget ({}, {} more than the {} one).",
+                "fixed", fixEmployeesFund, fixEmployeesFund - hourlyEmployeesFund, "hourly");
+        else if (fixEmployeesFund < hourlyEmployeesFund)
+            cout << format("The {} fund required a larger budget ({}, {} more than the {} one).",
+                "hourly", hourlyEmployeesFund, hourlyEmployeesFund - fixEmployeesFund, "fixed");
+        else cout << SALARIES_SAME_MSG;
+        cout << endl;
 
-		float averageSalaryRate = salaryFund / (FIX_EMPLOYEES_COUNT + hourlyEmployees);
+        float averageSalaryRate = salaryFund / (FIX_EMPLOYEES_COUNT + hourlyEmployees);
 
-		int coolEmployees = 0;
+        int coolEmployees = 0;
 
-		for (int i = 0; i < FIX_EMPLOYEES_COUNT; ++i) coolEmployees += fixEmployeesRate[i] > averageSalaryRate;
-		for (int i = 0; i < hourlyEmployees; ++i) coolEmployees += hourlyEmployeesRate[i] > averageSalaryRate;
+        for (int i = 0; i < FIX_EMPLOYEES_COUNT; ++i) coolEmployees += fixEmployeesRate[i] > averageSalaryRate;
+        for (int i = 0; i < hourlyEmployees; ++i) coolEmployees += hourlyEmployeesRate[i] > averageSalaryRate;
 
-		cout << endl << "The number of employees with earnings above the average throughout the company: " << coolEmployees << endl;
+        cout << endl << COOL_EMPLOYEES_MSG << coolEmployees << endl;
 
-		float minFixEmployeeRate = getMinValue(fixEmployeesRate, FIX_EMPLOYEES_COUNT);
+        float minFixEmployeeRate = getMinValue(fixEmployeesRate, FIX_EMPLOYEES_COUNT);
 
-		int notCoolHourlyEmployees = 0;
+        int notCoolHourlyEmployees = 0;
 
-		for (int i = 0; i < hourlyEmployees; ++i) notCoolHourlyEmployees += (hourlyEmployeesRate[i] * HOURS_OF_WORK) < minFixEmployeeRate;
+        for (int i = 0; i < hourlyEmployees; ++i) notCoolHourlyEmployees += (hourlyEmployeesRate[i] * HOURS_OF_WORK) < minFixEmployeeRate;
 
-		cout << endl << "The number of hourly employees whose salary is below the minimum fixed rate in the company: " << notCoolHourlyEmployees << endl;
+        cout << endl << NOT_COOL_HOURLY_MSG << notCoolHourlyEmployees << endl;
 
-		delete[] hourlyEmployeesRate;
+        delete[] hourlyEmployeesRate;
 
-		cout << endl << RelatedMsg::SEPARATOR << endl << endl;
+        cout << endl << RelatedMsg::SEPARATOR << endl << endl;
 
-	} while (getChoice());
+    } while (getChoice());
 
-	return 0;
+    return 0;
 }
