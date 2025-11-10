@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 int main() {
     const char EXPRESSION_MSG[] = "Enter the expression (e.g., 5 + 3, 5!, ~5, 5 & 3): ";
     const char WRONG_EXPRESSION_MSG[] = "Wrong expression.";

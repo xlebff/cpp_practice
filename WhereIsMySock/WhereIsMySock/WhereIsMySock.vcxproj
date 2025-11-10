@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e62d79dc-3f53-448c-a168-22ae71b54345}</ProjectGuid>
-    <RootNamespace>l13</RootNamespace>
+    <ProjectGuid>{e3432a42-0d50-45a3-a66c-77d25bb81651}</ProjectGuid>
+    <RootNamespace>WhereIsMySock</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -102,7 +102,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,17 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="animal.h" />
-    <ClInclude Include="car.h" />
-    <ClInclude Include="cinHandler.h" />
-    <ClInclude Include="consts.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Room.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="animal.cpp" />
-    <ClCompile Include="car.cpp" />
-    <ClCompile Include="cinHandler.cpp" />
-    <ClCompile Include="consts.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Inventory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
