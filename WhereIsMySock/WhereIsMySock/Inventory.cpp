@@ -1,33 +1,58 @@
 #include <iostream>
+#include <algorithm>
 #include "Inventory.h"
 
 using namespace std;
 
-Inventory::Inventory(int capacity) :
-	capacity(capacity) {}
-
-const int Inventory::getCapacity() {
-	return this->capacity;
+Inventory::Inventory(const int capacity) :
+	capacity(capacity) {
 }
 
-const vector<Item*> Inventory::getItems() {
-	return this->items;
-}
+int Inventory::getCapacity() const { return capacity; }
+
+vector<Item*> Inventory::getItems() const { return items; }
 
 bool Inventory::takeItem(Item* item) {
-	if (items.size() == capacity) return 0;
+	if (items.size() == capacity) {
+		cout << "The inventory is overflowing!" << endl;
+		return false;
+	}
 	else {
 		items.push_back(item);
-		return 1;
+		return true;
 	}
 }
 
-bool Inventory::dropItem(Item* item, Room* room) {
-	items.erase(remove(items.begin(), items.end(), item));
-
-	return 0;
+bool Inventory::dropItem(Item* item) {
+	auto it = remove(items.begin(), items.end(), item);
+	if (it != items.end()) {
+		items.erase(it, items.end());
+		return true;
+	}
+	return false;
 }
 
-bool Inventory::dropAllItems() {
+bool Inventory::dropAllItems(Room* room) {
+	room->addObjs(items);
 	items.clear();
+	return true;
+}
+
+Item* Inventory::getItem(const std::string& name) const {
+	for (Item* item : items) {
+		if (item->getName() == name) return item;
+		else continue;
+	}
+	return nullptr;
+}
+
+void Inventory::show() {
+	cout << "=== Your Inventory ===" << endl
+		<< "Capacity: " << items.size() << "/" << capacity << endl
+		<< "Items:" << endl;
+
+	for (size_t i = 0; i < items.size(); ++i) {
+		cout << "  " << (i + 1) << ". " << items[i]->getName()
+			<< " - " << items[i]->getDesc() << endl;
+	}
 }

@@ -28,6 +28,12 @@
     <Filter Include="Исходные файлы\Object">
       <UniqueIdentifier>{b71b313d-e180-404f-9b05-daee0e1e0293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Object\Items">
+      <UniqueIdentifier>{03c50b70-9c76-4dff-b02e-ed1935a026a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CommandHandler">
+      <UniqueIdentifier>{df703ecb-41f0-4782-945c-d91bf75c55e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -52,6 +58,39 @@
       <Filter>Исходные файлы\Object</Filter>
     </ClInclude>
     <ClInclude Include="UseCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinItem.h">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="TakeCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="DropCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="GoCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandHandler.h">
+      <Filter>Исходные файлы\CommandHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrewdriverItem.h">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="YarnItem.h">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SockItem.h">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashlightItem.h">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpCommand.h">
       <Filter>Исходные файлы\Command</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,6 +124,42 @@
     </ClCompile>
     <ClCompile Include="UseCommand.cpp">
       <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinItem.cpp">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="TakeCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="DropCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="GoCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandHandler.cpp">
+      <Filter>Исходные файлы\CommandHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrewdriverItem.cpp">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="YarnItem.cpp">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SockItem.cpp">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashlightItem.cpp">
+      <Filter>Исходные файлы\Object\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

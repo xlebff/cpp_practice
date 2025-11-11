@@ -123,26 +123,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CoinItem.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandHandler.h" />
+    <ClInclude Include="DropCommand.h" />
+    <ClInclude Include="FlashlightItem.h" />
+    <ClInclude Include="GoCommand.h" />
+    <ClInclude Include="HelpCommand.h" />
     <ClInclude Include="InspectCommand.h" />
+    <ClInclude Include="InventoryCommand.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="ScrewdriverItem.h" />
+    <ClInclude Include="SockItem.h" />
+    <ClInclude Include="TakeCommand.h" />
     <ClInclude Include="UseCommand.h" />
+    <ClInclude Include="YarnItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CoinItem.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandHandler.cpp" />
+    <ClCompile Include="DropCommand.cpp" />
+    <ClCompile Include="FlashlightItem.cpp" />
+    <ClCompile Include="GoCommand.cpp" />
+    <ClCompile Include="HelpCommand.cpp" />
     <ClCompile Include="InspectCommand.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Inventory.h" />
+    <ClCompile Include="InventoryCommand.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="ScrewdriverItem.cpp" />
+    <ClCompile Include="SockItem.cpp" />
+    <ClCompile Include="TakeCommand.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="UseCommand.cpp" />
+    <ClCompile Include="YarnItem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

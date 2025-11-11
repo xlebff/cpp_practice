@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Room.h"
 #include "Object.h"
+#include "Item.h"
+#include "Inventory.h"
 
 class Command {
 public:
@@ -11,6 +13,7 @@ public:
     virtual ~Command() = default;
 
     virtual bool execute(const std::vector<std::string>& args) = 0;
+    virtual bool undo();
     virtual bool validate(const std::vector<std::string>& args);
 
     std::string getName() const;
