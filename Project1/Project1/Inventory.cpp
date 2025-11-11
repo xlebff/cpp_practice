@@ -4,15 +4,24 @@
 
 using namespace std;
 
+Inventory* Inventory::instance = nullptr;
+
 Inventory::Inventory(const int capacity) :
 	capacity(capacity) {
+}
+
+Inventory* Inventory::getInstance() {
+	if (instance == nullptr) instance = new Inventory();
+	else;
+
+	return instance;
 }
 
 int Inventory::getCapacity() const { return capacity; }
 
 vector<Item*> Inventory::getItems() const { return items; }
 
-bool Inventory::takeItem(Item* item) {
+bool Inventory::addItem(Item* item) {
 	if (items.size() == capacity) {
 		cout << "The inventory is overflowing!" << endl;
 		return false;
@@ -23,7 +32,7 @@ bool Inventory::takeItem(Item* item) {
 	}
 }
 
-bool Inventory::dropItem(Item* item) {
+bool Inventory::removeItem(Item* item) {
 	auto it = remove(items.begin(), items.end(), item);
 	if (it != items.end()) {
 		items.erase(it, items.end());
@@ -32,8 +41,7 @@ bool Inventory::dropItem(Item* item) {
 	return false;
 }
 
-bool Inventory::dropAllItems(Room* room) {
-	for (Item* item : items) room->addObj((Object*)item);
+bool Inventory::clearItems() {
 	items.clear();
 	return true;
 }
@@ -46,7 +54,7 @@ Item* Inventory::getItem(const std::string& name) const {
 	return nullptr;
 }
 
-void Inventory::show() {
+void Inventory::display() {
 	cout << "=== Your Inventory ===" << endl
 		<< "Capacity: " << items.size() << "/" << capacity << endl
 		<< "Items:" << endl;

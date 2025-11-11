@@ -28,8 +28,10 @@ bool Room::addObj(Object* item) {
     return true;
 }
 
-bool Room::addObjs(vector<Item*>& items) {
-    for (Item* item : items) objs.push_back(item);
+bool Room::addObjs(vector<Object*>& items) {
+    /*for (Item* item : items) objs.push_back(item);
+    return true;*/
+
     return true;
 }
 

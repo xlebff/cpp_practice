@@ -1,6 +1,7 @@
 #pragma once
-#include "Room.h"
-#include "Inventory.h"
+
+class Room;
+class Inventory;
 
 class Player {
 public:
@@ -11,8 +12,8 @@ public:
 	void completeGame();
 
 private:
+	Player();
 	static Player* instance;
-	Inventory* inventory;
 	Room* curRoom;
+	Inventory* inventory;
 };
-

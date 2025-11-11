@@ -6,7 +6,7 @@ Item::Item(const string& name, const string& desc,
 	const vector<Item*>& combineItems,
 	const vector<Item*>& decombineItems,
 	const bool detachable) :
-	Object(name, desc),
+	Object(name, desc), 
 	combineItems(combineItems),
 	decombineItems(decombineItems),
 	detachable(detachable) { }

@@ -16,7 +16,6 @@ bool FlashlightItem::useOn(Object* target, Player* player, Room* room) {
         }
         else {
             cout << "You shine the flashlight and discover something hidden!" << endl;
-            room->addObj(new )
             return true;
         }
     }

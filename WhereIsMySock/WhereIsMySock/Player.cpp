@@ -1,7 +1,15 @@
 #include "Player.h"
+#include "Room.h"
+#include "Inventory.h"
 
-// Инициализация статической переменной
 Player* Player::instance = nullptr;
+
+Player::Player() : curRoom(nullptr), inventory(new Inventory(10)) {}
+
+Player::~Player() {
+    delete inventory;
+    inventory = nullptr;
+}
 
 Player* Player::getInstance() {
     if (instance == nullptr) {
@@ -23,6 +31,5 @@ void Player::setRoom(Room* room) {
 }
 
 void Player::completeGame() {
-    // Реализация завершения игры
-    // Например, можно добавить логику выигрыша
+    // код завершения игры
 }
