@@ -13,24 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Command">
+      <UniqueIdentifier>{800265a6-7485-47a7-ba97-c4dc143a0906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Inventory">
+      <UniqueIdentifier>{156f0843-818f-4399-9d8c-bd47fba9c86d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Player">
+      <UniqueIdentifier>{8ebaaaac-46d6-41b9-9adf-3c36179481ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Room">
+      <UniqueIdentifier>{454f5b62-b1b3-4607-b003-62baf7e68d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Object">
+      <UniqueIdentifier>{b71b313d-e180-404f-9b05-daee0e1e0293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Command.h">
+    <ClInclude Include="resource.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Command.h">
+      <Filter>Исходные файлы\Command</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Исходные файлы\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Исходные файлы\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Исходные файлы\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UseCommand.h">
+      <Filter>Исходные файлы\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="test.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
     <ClCompile Include="Inventory.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Исходные файлы\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Исходные файлы\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Исходные файлы\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="UseCommand.cpp">
+      <Filter>Исходные файлы\Command</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

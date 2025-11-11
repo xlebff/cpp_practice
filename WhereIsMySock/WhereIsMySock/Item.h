@@ -1,20 +1,21 @@
 #pragma once
+#include <string>
+#include <vector>
+#include "Object.h"
 
-class Item {
+class Item : public Object {
 public:
-	Item(char* name, char* desc, Item* mergeWith, Item* subItems);
-	const char* getName();
-	const char* getDesc();
-	const Item* getSubItems();
-	const Item* getMergeWith();
+	Item(const std::string& name, const std::string& desc,
+		const std::vector<Item*>& combineItems,
+		const std::vector<Item*>& decombineItems,
+		const bool detachable);
+
+	bool isDetachable() const;
+	std::vector<Item*> getCombineItems() const;
+	std::vector<Item*> getDecombineItems() const;
 
 private:
-	char* name;
-	char* desc;
-
-	int mergeWithCount;
-	Item* mergeWith;
-
-	int subItemsCount;
-	Item* subItems;
+	bool detachable;
+	std::vector<Item*> combineItems;
+	std::vector<Item*> decombineItems;
 };
