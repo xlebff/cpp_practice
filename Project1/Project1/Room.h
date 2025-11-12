@@ -31,6 +31,7 @@ public:
 
 	static std::vector<Room*> getAllRooms();
 	static std::vector<bool> getAvailableRooms();
+	static std::vector<std::string> getAvailableRoomsNames();
 
 private:
 	std::string name;

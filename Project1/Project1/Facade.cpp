@@ -19,14 +19,14 @@ bool Facade::processInput(const std::string& input) {
 
     if (action == "quit") {
         cout << "Thanks for playing!" << endl;
+        return false;
         exit(0);
-        return true;
     }
     else if (action == "help") {
         showHelp();
     }
     else if (action == "go" && args.size() >= 1) {
-        moveTo(args[0]);
+        moveTo(args[1]);
     }
     else if (action == "take" && args.size() >= 1) {
         takeItem(args[0]);
@@ -47,25 +47,28 @@ bool Facade::processInput(const std::string& input) {
     }
     else if (action == "inventory") {
         showInventory();
-    }
+    } */
     else if (action == "look") {
         lookAround();
-    } */
+    }
     else {
         cout << "Unknown command: '" << action << "'" << endl;
         cout << "Type 'help' to see available actions." << endl;
     }
 
-    return false;
+    return true;
 }
 
 void Facade::showWelcome() {
+    Room::initializeRooms();
+
     cout << "=== The Lost Sock Adventure ===" << endl
         << "You wake up and realize one of your favorite socks is missing!" << endl
         << "You can't leave the house with just one sock. Find the missing pair!" << endl
         << "Type 'help' to see available actions." << endl
         << "Type 'quit' to exit the game." << endl << endl
         << "You are in your bedroom. What do you do?" << endl;
+    cout << endl << ">  ";
 }
 
 void Facade::showHelp() {
@@ -89,11 +92,7 @@ bool Facade::moveTo(const std::string& roomName) {
     }
     else;
 
-    auto it = find(Room::getAllRooms().begin(), Room::getAllRooms().end(), room);
-    int index = distance(Room::getAllRooms().begin(), it);
-    bool available = Room::getAvailableRooms()[index];
-
-    if (available) {
+    if (Room::isAvailable(room->getName())) {
         cout << "You go to the " << room->getName() << endl
             << room->getDesc() << endl;
         Room::setCurrentRoom(room);
@@ -124,6 +123,34 @@ bool Facade::takeItem(const std::string& itemName) {
     else;
 
     return false;
+}
+
+void Facade::lookAround() {
+    Room* room = Room::getCurrentRoom();
+    vector<string> availableRoomsNames = Room::getAvailableRoomsNames();
+    vector<Object*> objects = room->getObjs();
+
+    cout << "You may interact with:" << endl;
+    bool first = true;
+    for (size_t i = 0; i < objects.size(); ++i) {
+        if (!first) {
+            cout << ";";
+            first = false;
+        }
+        else cout << endl;
+        cout << endl << "  " << i + 1 << ". " << objects[i]->getName();
+    }
+
+    cout << endl << "You may go to: " << endl;
+    first = true;
+    for (size_t i = 0; i < availableRoomsNames.size(); ++i) {
+        if (!first) {
+            cout << ";";
+            first = false;
+        }
+        else;
+        cout << endl << "  " << i + 1 << ". " << availableRoomsNames[i];
+    }
 }
 
 void Facade::parseInput(const std::string& input, 

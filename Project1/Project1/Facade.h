@@ -24,8 +24,8 @@ public:
     /*bool dropItem(const std::string& itemName);
     bool useItem(const std::string& itemName, const std::string& targetName = "");
     bool inspect(const std::string& objectName);
-    void showInventory();
-    void lookAround();*/
+    void showInventory();*/
+    void lookAround();
 
 private:
     static Facade* instance;

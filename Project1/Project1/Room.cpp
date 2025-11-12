@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "Room.h"
+#include <iostream>
 
 using namespace std;
 
@@ -92,8 +93,8 @@ Room* Room::getCurrentRoom() { return currentRoom; }
 void Room::setCurrentRoom(Room* room) { currentRoom = room; }
 
 Room* Room::getRoom(const string& name) {
-    for (Room* room : allRooms) {
-        if (room->getName() == name) return room;
+    for (size_t i = 0; i < allRooms.size(); ++i) {
+        if (allRooms[i]->getName() == name) return allRooms[i];
         else continue;
     }
 
@@ -133,4 +134,17 @@ vector<Room*> Room::getAllRooms() { return allRooms; }
 
 vector<bool> Room::getAvailableRooms() {
     return availableRooms;
+}
+
+vector<string> Room::getAvailableRoomsNames() {
+    vector<string> names = {};
+
+    for (size_t i = 0; i < allRooms.size(); ++i) {
+        if (availableRooms[i]) {
+            names.push_back(allRooms[i]->getName());
+        }
+        else continue;
+    }
+
+    return names;
 }

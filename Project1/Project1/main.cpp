@@ -8,10 +8,12 @@ int main() {
     game->showWelcome();
 
     string input;
-    bool shouldQuit = false;
+    bool running = true;
 
-    while (!shouldQuit && getline(cin, input)) {
-        shouldQuit = game->processInput(input);
+    while (running && getline(cin, input)) {
+        running = game->processInput(input);
+        if (running) cout << endl << ">  ";
+        else continue;
     }
 
     return 0;
