@@ -2,6 +2,17 @@
 
 using namespace std;
 
+const string commands[] = {
+    "quit",
+    "help",
+    "go to",
+    "look around",
+    "take",
+    "inspect"
+};
+
+enum commandsNum { QUIT, HELP, GO_TO, LOOK_AROUND, TAKE, INSPECT };
+
 Facade* Facade::instance = nullptr;
 
 Facade::Facade() { }
@@ -12,44 +23,36 @@ Facade* Facade::getInstance() {
     return instance;
 }
 
-bool Facade::processInput(const std::string& input) {
+bool Facade::processInput(string& input) {
     string action;
     vector<string> args;
-    parseInput(input, action, args);
-
-    if (action == "quit") {
-        cout << "Thanks for playing!" << endl;
-        return false;
-        exit(0);
-    }
-    else if (action == "help") {
-        showHelp();
-    }
-    else if (action == "go" && args.size() >= 1) {
-        moveTo(args[1]);
-    }
-    else if (action == "take" && args.size() >= 1) {
-        takeItem(args[0]);
-    } /*
-    else if (action == "drop" && args.size() >= 1) {
-        dropItem(args[0]);
-    }
-    else if (action == "use" && args.size() >= 1) {
-        if (args.size() >= 2) {
-            useItem(args[0], args[1]);
+    
+    if (parseInput(input, action, args)) {
+        if (action == commands[QUIT]) {
+            cout << "Thanks for playing!" << endl;
+            return false;
         }
-        else {
-            useItem(args[0]);
+        else if (action == commands[HELP]) showHelp();
+        else if (action == commands[GO_TO] && args.size()) moveTo(args[0]);
+        /* else if (action == commands[TAKE] && args.size()) takeItem(args[0]); */
+        /*
+        else if (action == "drop" && args.size() >= 1) {
+            dropItem(args[0]);
         }
-    }
-    else if (action == "inspect" && args.size() >= 1) {
-        inspect(args[0]);
-    }
-    else if (action == "inventory") {
-        showInventory();
-    } */
-    else if (action == "look") {
-        lookAround();
+        else if (action == "use" && args.size() >= 1) {
+            if (args.size() >= 2) {
+                useItem(args[0], args[1]);
+            }
+            else {
+                useItem(args[0]);
+            }
+        } */
+        else if (action == commands[INSPECT] && args.size()) inspect(args[0]);
+        /* else if (action == "inventory") {
+            showInventory();
+        } */
+        else if (action == commands[LOOK_AROUND]) lookAround();
+        else;
     }
     else {
         cout << "Unknown command: '" << action << "'" << endl;
@@ -93,7 +96,7 @@ bool Facade::moveTo(const std::string& roomName) {
     else;
 
     if (Room::isAvailable(room->getName())) {
-        cout << "You go to the " << room->getName() << endl
+        cout << "You`re going to the " << room->getName() << endl
             << room->getDesc() << endl;
         Room::setCurrentRoom(room);
         return true;
@@ -117,7 +120,7 @@ bool Facade::takeItem(const std::string& itemName) {
 
     if (inventory->addItem(static_cast<Item*>(target))) {
         room->removeObj(target);
-        cout << "You take the " << target->getName() << "." << endl;
+        cout << "You`re taking the " << target->getName() << "." << endl;
         return true;
     }
     else;
@@ -130,41 +133,78 @@ void Facade::lookAround() {
     vector<string> availableRoomsNames = Room::getAvailableRoomsNames();
     vector<Object*> objects = room->getObjs();
 
-    cout << "You may interact with:" << endl;
-    bool first = true;
-    for (size_t i = 0; i < objects.size(); ++i) {
-        if (!first) {
-            cout << ";";
-            first = false;
+    if (objects.size()) {
+        cout << "You may interact with:" << endl;
+        bool first = true;
+        for (size_t i = 0; i < objects.size(); ++i) {
+            if (!first) cout << ";" << endl;
+            else first = false;
+            cout << "  " << i + 1 << ". " << objects[i]->getName();
         }
-        else cout << endl;
-        cout << endl << "  " << i + 1 << ". " << objects[i]->getName();
     }
+    else cout << "There is no objects to interact." << endl;
 
-    cout << endl << "You may go to: " << endl;
-    first = true;
-    for (size_t i = 0; i < availableRoomsNames.size(); ++i) {
-        if (!first) {
-            cout << ";";
-            first = false;
+    cout << endl;
+
+    if (availableRoomsNames.size()) {
+        cout << endl << "You may go to:" << endl;
+        bool first = true;
+        for (size_t i = 0; i < availableRoomsNames.size(); ++i) {
+            if (!first) cout << ";" << endl;
+            else first = false;
+            cout << "  " << i + 1 << ". " << availableRoomsNames[i];
         }
-        else;
-        cout << endl << "  " << i + 1 << ". " << availableRoomsNames[i];
     }
+    else cout << "You`re going to be here forever.." << endl;
+
+    cout << endl;
 }
 
-void Facade::parseInput(const std::string& input, 
-    std::string& action, 
-    std::vector<std::string>& args) 
-{
+bool Facade::inspect(const string& objectName) {
+    Room* room = Room::getCurrentRoom();
+
+    Object* target = room->findObject(objectName);
+    if (!target) {
+        cout << "There is no '" << objectName << "' here." << endl;
+        return false;
+    }
+    else;
+
+    cout << target->getDesc() << endl;
+    return true;
+}
+
+bool isCommand(string& curCmd) {
+    for (string cmd : commands) {
+        if (curCmd == cmd) return true;
+        else continue;
+    }
+
+    return false;
+}
+
+bool Facade::parseInput(string& input, string& action, vector<string>& args) {
+    for (char &c : input) c = tolower(c);
+
     istringstream stream(input);
     string token;
 
     if (stream >> token) {
         action = token;
-        while (stream >> token) {
-            args.push_back(token);
+
+        if (!isCommand(action)) {
+            string nextToken;
+            if (stream >> nextToken) {
+                action += " " + nextToken;
+                if (!isCommand(action)) return false;
+                else;
+            }
+            else return false;
         }
+        else;
+
+        while (stream >> token) args.push_back(token);
+        return true;
     }
-    else;
+    else return false;
 }

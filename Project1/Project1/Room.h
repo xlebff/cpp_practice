@@ -7,24 +7,23 @@ class Room {
 public:
 	Room(const std::string& name,
 		const std::string& desc = "",
-		const bool available = true,
-		const std::vector<Object*>& objs = {});
+		const std::vector<Object*> objs = {},
+		const bool available = true);
 
 	Object* findObject(const std::string& name);
 
 	bool addObj(Object* item);
-	// bool addObjs(std::vector<Object*>& items);
 	bool removeObj(Object* item);
-	// bool removeObj(const std::string& name);
 
 	static void initializeRooms();
 	static Room* getCurrentRoom();
 	static void setCurrentRoom(Room* room);
 
-	static Room* getRoom(const std::string& name);
+	static Room* getRoom(const std::string& objName);
 	static bool setAvailability(const std::string& roomName, const bool available);
 	static bool isAvailable(const std::string& roomName);
 
+	int getIndex() const;
 	std::string getName() const;
 	std::string getDesc() const;
 	std::vector<Object*> getObjs() const;
@@ -34,6 +33,7 @@ public:
 	static std::vector<std::string> getAvailableRoomsNames();
 
 private:
+	int index;
 	std::string name;
 	std::string desc;
 	std::vector<Object*> objs;

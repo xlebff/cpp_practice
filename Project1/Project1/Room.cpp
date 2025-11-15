@@ -8,16 +8,32 @@ Room* Room::currentRoom;
 vector<Room*> Room::allRooms;
 vector<bool> Room::availableRooms;
 
-Room::Room(const std::string& name,
-    const std::string& desc,
-    const bool available,
-    const std::vector<Object*>&) :
+enum roomIndexes { BEDROOM, LIVINGROOM, KITCHEN, BATHROOM, BALCONY };
+const int roomsCount = 5;
+
+const vector<vector<bool>> availableForEachRoom = {
+    { false, true, false, false, true },
+    { true, false, true, true, false },
+    { false, true, false, true, false },
+    { false, true, true, false, false },
+    { true, false, false, false, false }
+};
+
+Room::Room(const string& name,
+    const string& desc,
+    const vector<Object*> objs,
+    const bool available) :
     name(name), desc(desc), objs(objs) {
     allRooms.push_back(this);
     availableRooms.push_back(available);
+    index = allRooms.size() - 1;
 }
 
-Object* Room::findObject(const std::string& name) {
+Object* Room::findObject(const string& objName) {
+    string name = objName;
+    name[0] = toupper(name[0]);
+    for (size_t i = 1; i < name.size(); ++i) name[i] = tolower(name[i]);
+
     for (Object* obj : objs) {
         if (obj->getName() == name) return obj;
         else continue;
@@ -34,13 +50,6 @@ bool Room::addObj(Object* item) {
     }
 }
 
-/* bool Room::addObjs(vector<Object*>& items) {
-    for (Item* item : items) objs.push_back(item);
-    return true;
-
-return true;
-} */
-
 bool Room::removeObj(Object* item) {
     if (item == nullptr) return false;
     else {
@@ -56,41 +65,56 @@ bool Room::removeObj(Object* item) {
     }
 }
 
-/* bool Room::removeObj(const string& name) {
-    auto it = find_if(objs.begin(), objs.end(),
-        [&name](Object* obj) {
-            return obj->getName() == name;
-        });
-
-    if (it != objs.end()) {
-        objs.erase(it);
-        return true;
-    }
-
-    return false;
-} */
-
 void Room::initializeRooms() {
     allRooms = {
-        new Room("bedroom",
-                "Your cozy bedroom. There's a bed, a wardrobe, and a nightstand."),
-        new Room("livingroom",
-                "A comfortable living room with a sofa, TV, and coffee table."),
-        new Room("kitchen",
-                "A clean kitchen with appliances and a dining table."),
-        new Room("bathroom",
-                "A small bathroom with a sink, toilet, and shower."),
-        new Room("balcony",
-                "A balcony with a nice view of the street.")
+        new Room("bedroom", 
+            "Your cozy bedroom. There's a bed, a wardrobe, and a nightstand.", 
+            {
+                new Object("Cat", "A fluffy ginger cat named Vasya is lazily stretching on the floor."),
+                new Object("Bed", "A neatly made single bed with a blue comforter. It looks comfortable and inviting."),
+                new Object("Nightstand", "A small wooden nightstand with a drawer. There's a lamp and an alarm clock on top."),
+                new Object("Wardrobe", "A tall wooden wardrobe with two doors. It seems to contain your clothes and other personal items.")
+            },
+            true),
+
+        new Room("livingroom", 
+            "A comfortable living room with a sofa, TV, and coffee table.", 
+            {
+                new Object("Sofa", "A comfortable-looking sofa with soft cushions. Perfect for relaxing after a long day."),
+                new Object("Note",
+                    "You unfold the note and read: \"Dear roommate, I borrowed your sock for a art project. Check the balcony! - Cat Vasya\"")
+            }, 
+            true),
+
+        new Room("kitchen", 
+            "A clean kitchen with appliances and a dining table.", 
+            {
+                new Object("Kitchen table", "A simple wooden kitchen table with a clean surface. A fruit bowl sits in the center."),
+                new Object("Sink", "A stainless steel kitchen sink. It's clean and dry, with a faucet that looks relatively new.")
+            }),
+
+        new Room("bathroom", "A small bathroom with a sink, toilet, and shower."),
+
+        new Room("balcony", 
+            "A balcony with a nice view of the street.", 
+            {
+                new Object("Clothesline", 
+                    "A drying clothesline stretched across the balcony. A single striped sock hangs from it, swaying gently in the breeze."),
+                new Object("Trash bin", "A plastic trash bin in the corner. It's mostly empty with just some crumpled papers inside."),
+            }, 
+            false)
     };
 
-    availableRooms = { true, true, false, false, false };
+    availableRooms = { false, true, false, false, false };
     currentRoom = getRoom("bedroom");
 }
 
 Room* Room::getCurrentRoom() { return currentRoom; }
 
-void Room::setCurrentRoom(Room* room) { currentRoom = room; }
+void Room::setCurrentRoom(Room* room) { 
+    currentRoom = room;
+    availableRooms = availableForEachRoom[room->getIndex()];
+}
 
 Room* Room::getRoom(const string& name) {
     for (size_t i = 0; i < allRooms.size(); ++i) {
@@ -123,6 +147,8 @@ bool Room::isAvailable(const std::string& roomName) {
 
     return false;
 }
+
+int Room::getIndex() const { return index; }
 
 string Room::getName() const { return name; }
 

@@ -15,23 +15,23 @@ class Facade {
 public:
     static Facade* getInstance();
 
-    bool processInput(const std::string& input);
+    bool processInput(std::string& input);
     void showWelcome();
     void showHelp();
 
     bool moveTo(const std::string& roomName);
     bool takeItem(const std::string& itemName);
     /*bool dropItem(const std::string& itemName);
-    bool useItem(const std::string& itemName, const std::string& targetName = "");
+    bool useItem(const std::string& itemName, const std::string& targetName = ""); */
     bool inspect(const std::string& objectName);
-    void showInventory();*/
+    /* void showInventory(); */
     void lookAround();
 
 private:
     static Facade* instance;
     Facade();
 
-    void parseInput(const std::string& input, 
+    bool parseInput(std::string& input, 
         std::string& action, 
         std::vector<std::string>& args);
 };
