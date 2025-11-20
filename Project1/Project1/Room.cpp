@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "Room.h"
-#include <iostream>
+#include "Item.h"
 
 using namespace std;
 
@@ -30,12 +30,8 @@ Room::Room(const string& name,
 }
 
 Object* Room::findObject(const string& objName) {
-    string name = objName;
-    name[0] = toupper(name[0]);
-    for (size_t i = 1; i < name.size(); ++i) name[i] = tolower(name[i]);
-
     for (Object* obj : objs) {
-        if (obj->getName() == name) return obj;
+        if (*obj == objName) return obj;
         else continue;
     }
 
@@ -67,35 +63,40 @@ bool Room::removeObj(Object* item) {
 
 void Room::initializeRooms() {
     allRooms = {
-        new Room("bedroom", 
+        new Room("Bedroom", 
             "Your cozy bedroom. There's a bed, a wardrobe, and a nightstand.", 
             {
                 new Object("Cat", "A fluffy ginger cat named Vasya is lazily stretching on the floor."),
                 new Object("Bed", "A neatly made single bed with a blue comforter. It looks comfortable and inviting."),
                 new Object("Nightstand", "A small wooden nightstand with a drawer. There's a lamp and an alarm clock on top."),
+                new Item ("Pencil", "A standard yellow pencil with a sharp tip."),
                 new Object("Wardrobe", "A tall wooden wardrobe with two doors. It seems to contain your clothes and other personal items.")
             },
             true),
 
-        new Room("livingroom", 
+        new Room("Livingroom", 
             "A comfortable living room with a sofa, TV, and coffee table.", 
             {
                 new Object("Sofa", "A comfortable-looking sofa with soft cushions. Perfect for relaxing after a long day."),
                 new Object("Note",
-                    "You unfold the note and read: \"Dear roommate, I borrowed your sock for a art project. Check the balcony! - Cat Vasya\"")
+                    "You unfold the note and read: \"Dear roommate, I borrowed your sock for a art project. Check the balcony! - Cat Vasya\""),
+                new Item ("Yarn", "A soft ball of red yarn, slightly unraveled."),
+                new Item ("Coin", "A shiny gold coin. It looks quite ordinary."),
+                new Item ("Sports sock", "A clean white sports sock with blue stripes at the top.")
             }, 
             true),
 
-        new Room("kitchen", 
+        new Room("Kitchen", 
             "A clean kitchen with appliances and a dining table.", 
             {
                 new Object("Kitchen table", "A simple wooden kitchen table with a clean surface. A fruit bowl sits in the center."),
-                new Object("Sink", "A stainless steel kitchen sink. It's clean and dry, with a faucet that looks relatively new.")
+                new Object("Sink", "A stainless steel kitchen sink. It's clean and dry, with a faucet that looks relatively new."),
+                new Item ("Glass of water", "A full glass of clear, fresh water.")
             }),
 
-        new Room("bathroom", "A small bathroom with a sink, toilet, and shower."),
+        new Room("Bathroom", "A small bathroom with a sink, toilet, and shower."),
 
-        new Room("balcony", 
+        new Room("Balcony", 
             "A balcony with a nice view of the street.", 
             {
                 new Object("Clothesline", 
@@ -105,8 +106,7 @@ void Room::initializeRooms() {
             false)
     };
 
-    availableRooms = { false, true, false, false, false };
-    currentRoom = getRoom("bedroom");
+    setCurrentRoom(getRoom("Bedroom"));
 }
 
 Room* Room::getCurrentRoom() { return currentRoom; }
@@ -118,7 +118,7 @@ void Room::setCurrentRoom(Room* room) {
 
 Room* Room::getRoom(const string& name) {
     for (size_t i = 0; i < allRooms.size(); ++i) {
-        if (allRooms[i]->getName() == name) return allRooms[i];
+        if (*allRooms[i] == name) return allRooms[i];
         else continue;
     }
 
@@ -127,7 +127,7 @@ Room* Room::getRoom(const string& name) {
 
 bool Room::setAvailability(const string& roomName, bool available) {
     for (size_t i = 0; i < allRooms.size(); ++i) {
-        if (allRooms[i]->getName() == roomName) {
+        if (*allRooms[i] == roomName) {
             availableRooms[i] = available;
             return true;
         }
@@ -139,9 +139,7 @@ bool Room::setAvailability(const string& roomName, bool available) {
 
 bool Room::isAvailable(const std::string& roomName) {
     for (size_t i = 0; i < allRooms.size(); ++i) {
-        if (allRooms[i]->getName() == roomName) {
-            return availableRooms[i];
-        }
+        if (*allRooms[i] == roomName) return availableRooms[i];
         else continue;
     }
 
@@ -158,9 +156,7 @@ vector<Object*> Room::getObjs() const { return objs; }
 
 vector<Room*> Room::getAllRooms() { return allRooms; }
 
-vector<bool> Room::getAvailableRooms() {
-    return availableRooms;
-}
+vector<bool> Room::getAvailableRooms() { return availableRooms; }
 
 vector<string> Room::getAvailableRoomsNames() {
     vector<string> names = {};
@@ -174,3 +170,5 @@ vector<string> Room::getAvailableRoomsNames() {
 
     return names;
 }
+
+bool Room::operator==(const string other) const { return (name == other); }

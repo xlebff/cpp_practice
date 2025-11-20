@@ -32,6 +32,8 @@ public:
 	static std::vector<bool> getAvailableRooms();
 	static std::vector<std::string> getAvailableRoomsNames();
 
+	bool operator==(const std::string other) const;
+
 private:
 	int index;
 	std::string name;

@@ -32,7 +32,7 @@ bool Inventory::addItem(Item* item) {
 	}
 }
 
-bool Inventory::removeItem(Item* item) {
+bool Inventory::removeItem(const Item* item) {
 	auto it = remove(items.begin(), items.end(), item);
 	if (it != items.end()) {
 		items.erase(it, items.end());
@@ -46,21 +46,22 @@ bool Inventory::clearItems() {
 	return true;
 }
 
-Item* Inventory::getItem(const std::string& name) const {
-	for (Item* item : items) {
-		if (item->getName() == name) return item;
+Item* Inventory::getItem(const string& itemName) const {
+	for (Item *item : items) {
+		if (*item == itemName) return item;
 		else continue;
 	}
 	return nullptr;
 }
 
 void Inventory::display() {
-	cout << "=== Your Inventory ===" << endl
-		<< "Capacity: " << items.size() << "/" << capacity << endl
-		<< "Items:" << endl;
+	cout << "Capacity: " << items.size() << "/" << capacity << endl;
 
-	for (size_t i = 0; i < items.size(); ++i) {
-		cout << "  " << (i + 1) << ". " << items[i]->getName()
-			<< " - " << items[i]->getDesc() << endl;
+	if (!items.empty()) {
+		for (size_t i = 0; i < items.size(); ++i) {
+			cout << "  " << (i + 1) << ". " << items[i]->getName()
+				<< " - " << items[i]->getDesc() << endl;
+		}
 	}
+	else;
 }

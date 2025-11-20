@@ -16,6 +16,8 @@ public:
 	std::vector<Item*> getDecombineItems() const;
 
 private:
+	std::string name;
+	std::string desc;
 	bool detachable;
 	std::vector<Item*> combineItems;
 	std::vector<Item*> decombineItems;

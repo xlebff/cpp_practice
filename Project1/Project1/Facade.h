@@ -10,6 +10,7 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Object.h"
+#include "UsageManager.h"
 
 class Facade {
 public:
@@ -21,10 +22,10 @@ public:
 
     bool moveTo(const std::string& roomName);
     bool takeItem(const std::string& itemName);
-    /*bool dropItem(const std::string& itemName);
-    bool useItem(const std::string& itemName, const std::string& targetName = ""); */
+    bool dropItem(const std::string& itemName);
+    bool useItem(std::vector<std::string> args);
     bool inspect(const std::string& objectName);
-    /* void showInventory(); */
+    void showInventory();
     void lookAround();
 
 private:
@@ -34,4 +35,8 @@ private:
     bool parseInput(std::string& input, 
         std::string& action, 
         std::vector<std::string>& args);
+
+    std::string combineArgs(const std::vector<std::string>& args);
+
+    bool isCommand(std::string& curCmd);
 };

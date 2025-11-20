@@ -12,10 +12,10 @@ public:
 	std::vector<Item*> getItems() const;
 
 	bool addItem(Item* item);
-	bool removeItem(Item* item);
+	bool removeItem(const Item* item);
 	bool clearItems();
 
-	Item* getItem(const std::string& name) const;
+	Item* getItem(const std::string& itemName) const;
 
 	void display();
 
