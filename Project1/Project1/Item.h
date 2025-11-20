@@ -11,6 +11,8 @@ public:
 		const std::vector<Item*>& decombineItems = {},
 		const bool detachable = true);
 
+	~Item() override;
+
 	bool isDetachable() const;
 	std::vector<Item*> getCombineItems() const;
 	std::vector<Item*> getDecombineItems() const;

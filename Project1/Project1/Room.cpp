@@ -29,6 +29,12 @@ Room::Room(const string& name,
     index = allRooms.size() - 1;
 }
 
+Room::~Room() {
+    for (Object* obj : objs)
+        delete obj;
+    objs.clear();
+}
+
 Object* Room::findObject(const string& objName) {
     for (Object* obj : objs) {
         if (*obj == objName) return obj;
@@ -69,7 +75,9 @@ void Room::initializeRooms() {
                 new Object("Cat", "A fluffy ginger cat named Vasya is lazily stretching on the floor."),
                 new Object("Bed", "A neatly made single bed with a blue comforter. It looks comfortable and inviting."),
                 new Object("Nightstand", "A small wooden nightstand with a drawer. There's a lamp and an alarm clock on top."),
-                new Item ("Pencil", "A standard yellow pencil with a sharp tip."),
+                new Item("Pencil", "A standard yellow pencil with a sharp tip."),
+                new Item("Lamp", "A new, unpacked light bulb."),
+                new Item("Phone", "Your smartphone. The battery is at 25%."),
                 new Object("Wardrobe", "A tall wooden wardrobe with two doors. It seems to contain your clothes and other personal items.")
             },
             true),
@@ -78,11 +86,10 @@ void Room::initializeRooms() {
             "A comfortable living room with a sofa, TV, and coffee table.", 
             {
                 new Object("Sofa", "A comfortable-looking sofa with soft cushions. Perfect for relaxing after a long day."),
-                new Object("Note",
+                new Item("Note",
                     "You unfold the note and read: \"Dear roommate, I borrowed your sock for a art project. Check the balcony! - Cat Vasya\""),
-                new Item ("Yarn", "A soft ball of red yarn, slightly unraveled."),
-                new Item ("Coin", "A shiny gold coin. It looks quite ordinary."),
-                new Item ("Sports sock", "A clean white sports sock with blue stripes at the top.")
+                new Item("Coin", "A shiny gold coin. It looks quite ordinary."),
+                new Item("Sports sock", "A clean white sports sock with blue stripes at the top.")
             }, 
             true),
 
@@ -91,10 +98,11 @@ void Room::initializeRooms() {
             {
                 new Object("Kitchen table", "A simple wooden kitchen table with a clean surface. A fruit bowl sits in the center."),
                 new Object("Sink", "A stainless steel kitchen sink. It's clean and dry, with a faucet that looks relatively new."),
-                new Item ("Glass of water", "A full glass of clear, fresh water.")
+                new Item("Glass of water", "A full glass of clear, fresh water."),
+                new Object("Flower", "A disgruntled flower... The soil is completely dry!")
             }),
 
-        new Room("Bathroom", "A small bathroom with a sink, toilet, and shower."),
+        new Room("Bathroom", "A dark bathroom. The light bulb burned out yesterday, so you can't see anything."),
 
         new Room("Balcony", 
             "A balcony with a nice view of the street.", 
@@ -107,6 +115,15 @@ void Room::initializeRooms() {
     };
 
     setCurrentRoom(getRoom("Bedroom"));
+}
+
+void Room::cleanup() {
+    for (Room* room : allRooms)
+        delete room;
+
+    allRooms.clear();
+    availableRooms.clear();
+    currentRoom = nullptr;
 }
 
 Room* Room::getCurrentRoom() { return currentRoom; }
@@ -151,6 +168,9 @@ int Room::getIndex() const { return index; }
 string Room::getName() const { return name; }
 
 string Room::getDesc() const { return desc; }
+
+void Room::setDesc(string newDesc) { desc = newDesc; }
+void Room::setDesc(const char* newDesc) { desc = newDesc; }
 
 vector<Object*> Room::getObjs() const { return objs; }
 

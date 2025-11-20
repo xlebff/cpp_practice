@@ -11,6 +11,9 @@ public:
     std::string getName() const;
     std::string getDesc() const;
 
+    void setDesc(const std::string& newDesc);
+    void setDesc(const char* newDesc);
+
     bool operator==(const std::string other);
 
 private:

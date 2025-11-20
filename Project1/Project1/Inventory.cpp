@@ -10,6 +10,18 @@ Inventory::Inventory(const int capacity) :
 	capacity(capacity) {
 }
 
+Inventory::~Inventory() {
+	for (Item* item : items)
+		delete item;
+
+	items.clear();
+}
+
+void Inventory::cleanup() {
+	delete instance;
+	instance = nullptr;
+}
+
 Inventory* Inventory::getInstance() {
 	if (instance == nullptr) instance = new Inventory();
 	else;

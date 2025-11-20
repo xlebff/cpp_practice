@@ -10,12 +10,15 @@ public:
 		const std::vector<Object*> objs = {},
 		const bool available = true);
 
+	~Room();
+
 	Object* findObject(const std::string& name);
 
 	bool addObj(Object* item);
 	bool removeObj(Object* item);
 
 	static void initializeRooms();
+	static void cleanup();
 	static Room* getCurrentRoom();
 	static void setCurrentRoom(Room* room);
 
@@ -26,6 +29,8 @@ public:
 	int getIndex() const;
 	std::string getName() const;
 	std::string getDesc() const;
+	void setDesc(std::string newDesc);
+	void setDesc(const char* newDesc);
 	std::vector<Object*> getObjs() const;
 
 	static std::vector<Room*> getAllRooms();

@@ -16,5 +16,6 @@ int main() {
         else continue;
     }
 
+    game->endGame();
     return 0;
 }

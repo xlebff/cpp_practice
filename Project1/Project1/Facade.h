@@ -5,7 +5,6 @@
 #include <sstream>
 #include <vector>
 
-#include "Player.h"
 #include "Room.h"
 #include "Inventory.h"
 #include "Item.h"
@@ -28,9 +27,23 @@ public:
     void showInventory();
     void lookAround();
 
+    bool trueEnding();
+
+    int updateTurns();
+    int getTurns();
+    int getMaxTurns();
+
+    void endGame();
+
 private:
     static Facade* instance;
     Facade();
+
+    int maxTurns;
+    int turns;
+
+    int lightTurns;
+    int maxLightTurns;
 
     bool parseInput(std::string& input, 
         std::string& action, 

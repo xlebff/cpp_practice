@@ -6,6 +6,9 @@ class Inventory {
 public:
 	Inventory(const int capacity = 5);
 
+	~Inventory();
+	static void cleanup();
+
 	static Inventory* getInstance();
 
 	int getCapacity() const;
