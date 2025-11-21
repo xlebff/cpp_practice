@@ -8,7 +8,8 @@ static void waterToCat(const Item* item, Object* target) {
 	cout << "You poured the water out of the glass on the cat... Why did you do that?\n"
 		<< "The cat is very unhappy! He grabbed your leg, scratched it, and ran away.\n"
 		<< "Yeah, it's better not to touch him now...\n"
-		<< "and it is better to treat the wound, otherwise a scar will remain." << endl;
+		<< "and it is better to treat the wound, otherwise a scar will remain.\n"
+		<< "There is a small red ball under it." << endl;
 
 	Inventory* inventory = Inventory::getInstance();
 	inventory->removeItem(item);
@@ -22,9 +23,12 @@ static void waterToCat(const Item* item, Object* target) {
 	room->removeObj(target);
 	bathroom->addObj(target);
 	target->setDesc("It's better to leave him alone!");
+
+	room->addObj(new Item("Yarn",
+		"A soft ball of red yarn, slightly unraveled."));
 }
 
-static void coinToCat(const Item* item, Object* target) {
+static void coinToCat(Item* item, Object* target) {
 	cout << "You dropped a coin next to the cat.\n"
 		<< "Vasya woke up from the sound and left in displeasure!\n"
 		<< "There is a small red ball under it." << endl;
@@ -34,6 +38,7 @@ static void coinToCat(const Item* item, Object* target) {
 
 	room->addObj(new Item("Yarn",
 		"A soft ball of red yarn, slightly unraveled."));
+	room->addObj(item);
 
 	room->removeObj(target);
 	kitchen->addObj(target);
@@ -46,7 +51,8 @@ static void coinToCat(const Item* item, Object* target) {
 static void phoneToCat(const Item* item, Object* target) {
 	cout << "You take a photo of the cat with your phone.\n"
 		<< "The flash startled Vasya! He jumped up and ran away to the kitchen.\n"
-		<< "A cute photo of a sleeping cat is now in your gallery." << endl;
+		<< "A cute photo of a sleeping cat is now in your gallery.\n"
+		<< "There is a small red ball under it." << endl;
 
 	Room* kitchen = Room::getRoom("Kitchen");
 	Room* room = Room::getCurrentRoom();
@@ -55,6 +61,9 @@ static void phoneToCat(const Item* item, Object* target) {
 	room->removeObj(cat);
 	kitchen->addObj(cat);
 	cat->setDesc("The cat is hiding under the table after the flash.");
+
+	room->addObj(new Item("Yarn",
+		"A soft ball of red yarn, slightly unraveled."));
 }
 
 static void phoneFlashlight() {

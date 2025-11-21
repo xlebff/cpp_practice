@@ -1,3 +1,4 @@
+#pragma once
 #include <map>
 #include <string>
 
@@ -33,7 +34,8 @@ enum ItemType {
     LAMP_SOCKET,
     BIN,
     LAMP,
-    GLASS
+    GLASS,
+    YARN
 };
 
 static const std::map<ItemType, std::string> items = {
@@ -68,5 +70,6 @@ static const std::map<ItemType, std::string> items = {
     { LAMP_SOCKET, "Lamp socket" },
     { BIN, "Trash bin" },
     { LAMP, "Lamp" },
-    { GLASS, "Glass" }
+    { GLASS, "Glass" },
+    { YARN, "Yarn" }
 };

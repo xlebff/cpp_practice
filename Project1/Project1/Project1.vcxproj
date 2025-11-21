@@ -28,6 +28,8 @@
     <ClInclude Include="UsageManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CombineManager.cpp" />
+    <ClCompile Include="CombineManager.h" />
     <ClCompile Include="Facade.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />

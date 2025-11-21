@@ -116,6 +116,7 @@ bool Facade::processInput(string& input) {
         else if (action == commands[SHOW_INVENTORY]) showInventory();
         else if (action == commands[LOOK_AROUND]) lookAround();
         else if (action == commands[USE]) useItem(args);
+        else if (action == commands[COMBINE]) combineItems(args);
         else {
             cout << "Unknown command or missing arguments: '" << action << "'" << endl;
             cout << "Type 'help' to see available actions." << endl;
@@ -146,15 +147,15 @@ void Facade::showWelcome() {
 
 void Facade::showHelp() {
     cout << "Available actions:\n";
-    cout << "look                - Look around the room\n";
-    cout << "look at [object]    - Examine an object closely\n";
-    cout << "use [item] [target] - Use an item on an object\n";
-    cout << "take [item]         - Take an item\n";
-    cout << "drop [item]         - Drop an item\n";
-    cout << "go [location]       - Move to another room\n";
-    cout << "inventory           - Show your inventory\n";
-    cout << "help                - Show this help message\n";
-    cout << "quit                - Exit the game\n";
+    cout << "look around            - Look around the room\n";
+    cout << "look at [object]       - Examine an object closely\n";
+    cout << "use [item] to [target] - Use an item on an object\n";
+    cout << "take [item]            - Take an item\n";
+    cout << "drop [item]            - Drop an item\n";
+    cout << "go to [location]       - Move to another room\n";
+    cout << "show inventory         - Show your inventory\n";
+    cout << "help                   - Show this help message\n";
+    cout << "quit                   - Exit the game\n";
 }
 
 bool Facade::moveTo(const string& roomName) {
@@ -289,17 +290,16 @@ void Facade::showInventory() {
     inventory->display();
 }
 
-bool Facade::useItem(vector<string> args) {
+Item* parseItem(vector<string> args, int* index) {
     Inventory* inventory = Inventory::getInstance();
 
-    int index = 1;
     Item* item = nullptr;
     string itemName = args[0];
 
-    for (; index <= args.size(); ++index) {
+    for (; *index <= args.size(); ++(*index)) {
         item = inventory->getItem(itemName);
         if (!item) {
-            string word = args[index];
+            string word = args[*index];
             word[0] = tolower(word[0]);
             word = " " + word;
             itemName += word;
@@ -307,33 +307,86 @@ bool Facade::useItem(vector<string> args) {
         else break;
     }
 
+    return item;
+}
+
+bool Facade::combineItems(vector<string> args) {
+    Item* item0 = nullptr;
+    Item* item1 = nullptr;
+
+    string itemName = args[0];
+
+    int index = 1;
+    item0 = parseItem(args, &index);
+
+    if (!item0) {
+        cout << "You don`t have the " << itemName << "." << endl;
+        return false;
+    }
+    else;
+
+    if (index < args.size() && args[index] == "With") {
+        ++index;
+        item1 = parseItem(args, &index);
+
+        if (!item1) {
+            cout << "Specify an item you want to combine " << item0->getName() << " with." << endl;
+            return false;
+        }
+        else;
+    }
+    else {
+        cout << "Wrong syntaxis!" << endl;
+        return false;
+    }
+
+    if (!CombineManager::processCombine(item0, item1)) {
+        cout << "You can`t combine " << item0->getName()
+            << " with " << item1->getName() << "." << endl;
+        return false;
+    }
+    else return true;
+}
+
+bool Facade::useItem(vector<string> args) {
+    Item* item = nullptr;
+    Object* target = nullptr;
+
+    string itemName = args[0];
+
+    int index = 1;
+    item = parseItem(args, &index);
+
     if (!item) {
         cout << "You don`t have the " << itemName << "." << endl;
         return false;
     }
     else;
 
-    Object* target = nullptr;
+    if (index < args.size() && args[index] == "To") {
+        ++index;
 
-    if (index < args.size()) {
-        Room* room = Room::getCurrentRoom();
+        if (index < args.size()) {
+            Room* room = Room::getCurrentRoom();
 
-        string objectName = args[index];
+            string objectName = args[index];
 
-        for (; index < args.size(); ++index) {
-            target = room->findObject(objectName);
-            if (!target) {
-                if (index + 1 < args.size()) {
-                    string word = args[index + 1];
-                    word[0] = tolower(word[0]);
-                    word = " " + word;
-                    objectName += word;
+            for (; index < args.size(); ++index) {
+                target = room->findObject(objectName);
+                if (!target) {
+                    if (index + 1 < args.size()) {
+                        string word = args[index + 1];
+                        word[0] = tolower(word[0]);
+                        word = " " + word;
+                        objectName += word;
+                    }
+                    else break;
                 }
                 else break;
             }
-            else break;
         }
-    }
+        else;
+    } 
     else;
 
     if (!UsageManager::processUsage(item, target)) {

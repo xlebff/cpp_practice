@@ -10,6 +10,7 @@
 #include "Item.h"
 #include "Object.h"
 #include "UsageManager.h"
+#include "CombineManager.h"
 
 class Facade {
 public:
@@ -26,6 +27,7 @@ public:
     bool inspect(const std::string& objectName);
     void showInventory();
     void lookAround();
+    bool combineItems(std::vector<std::string> args);
 
     bool trueEnding();
 
