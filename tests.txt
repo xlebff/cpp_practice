@@ -1,0 +1,37 @@
+take phone
+take lamp
+go to livingroom
+go to bathroom
+use phone
+use lamp to lamp socket
+
+take phone
+go to livingroom
+use phone
+use phone to sofa
+take coin
+go to bedroom
+use coin to cat
+take coin
+take yarn
+combine yarn with coin
+
+take phone
+take lamp
+go to livingroom
+go to bathroom
+use phone
+use lamp to lamp socket
+take phone
+take screwdriver base
+go to livingroom
+use phone to sofa
+take coin
+go to bedroom
+use coin to cat
+take coin
+take yarn
+combine yarn with coin
+use coin on a string to wardrobe
+combine screwdriver tip with screwdriver base
+use screwdriver to door

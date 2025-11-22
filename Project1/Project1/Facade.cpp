@@ -294,20 +294,19 @@ Item* parseItem(vector<string> args, int* index) {
     Inventory* inventory = Inventory::getInstance();
     Item* item = nullptr;
 
-    while (*index < args.size()) {
-        string itemName = args[*index];
-        item = inventory->getItem(itemName);
+    string itemName;
 
-        if (!item) {
+    for (; *index < args.size(); ++(*index)) {
+        if (itemName.empty()) itemName = args[*index];
+        else {
             string word = args[*index];
             word[0] = tolower(word[0]);
             word = " " + word;
             itemName += word;
-            ++(*index);
         }
-        else {
-            break;
-        }
+
+        item = inventory->getItem(itemName);
+        if (item) return item;
     }
 
     return item;

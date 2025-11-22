@@ -13,6 +13,8 @@ enum ItemType {
     APPLE,
     KEYS,
     SCREWDRIVER,
+    SCREWDRIVER_BASE,
+    SCREWDRIVER_TIP,
     PIKMI_STICK,
     SECOND_SOCK,
     NEW_LIGHT_BULB,
@@ -35,7 +37,9 @@ enum ItemType {
     BIN,
     LAMP,
     GLASS,
-    YARN
+    YARN,
+    COIN_ON_A_STRING,
+    DOOR
 };
 
 static const std::map<ItemType, std::string> items = {
@@ -49,6 +53,8 @@ static const std::map<ItemType, std::string> items = {
     { APPLE, "Apple" },
     { KEYS, "Keys" },
     { SCREWDRIVER, "Screwdriver" },
+    { SCREWDRIVER_BASE, "Screwdriver base" },
+    { SCREWDRIVER_TIP, "Screwdriver tip" },
     { PIKMI_STICK, "Pikmi stick" },
     { SECOND_SOCK, "Second sock" },
     { NEW_LIGHT_BULB, "New light bulb" },
@@ -71,5 +77,7 @@ static const std::map<ItemType, std::string> items = {
     { BIN, "Trash bin" },
     { LAMP, "Lamp" },
     { GLASS, "Glass" },
-    { YARN, "Yarn" }
+    { YARN, "Yarn" },
+    { COIN_ON_A_STRING, "Coin on a string" },
+    { DOOR, "Door" }
 };

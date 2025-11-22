@@ -162,9 +162,37 @@ static void lampToSocket(const Item* item, Object* target) {
 			"A tall wicker laundry basket filled with clean, folded clothes. And inside... A sock! But not that one."));
 		room->addObj(new Object("Sink",
 			"A stainless steel sink. It's clean and dry, with a faucet that looks relatively new."));
+		room->addObj(new Item("Screwdriver base", "A screwdriver without a tip."));
 		room->removeObj(target);
 		delete target;
 	}
+}
+
+static void coinToWardrobe() {
+	Room* room = Room::getCurrentRoom();
+	Inventory* inventory = Inventory::getInstance();
+
+	if (inventory->addItem(new Item("Screwdriver tip",
+		"The tip of the screwdriver. It can be combined with a screwdriver!"))) {
+		cout << "You have picked up the tip of the screwdriver." << endl;
+	}
+	else {
+		cout << "You have found the tip of the screwdriver, but there is not enough space in the inventory..." << endl;
+		room->addObj(new Item("Screwdriver tip",
+			"The tip of the screwdriver. It can be combined with a screwdriver!"));
+	}
+}
+
+static void screwdriverToDoor(Object* target) {
+	Room* room = Room::getCurrentRoom();
+	Room* balcony = Room::getRoom("Balcony");
+	
+	Room::setAvailability(room->getIndex(), balcony->getIndex(), true);
+
+	cout << "The balcony is now available!" << endl;
+
+	room->removeObj(target);
+	delete target;
 }
 
 bool UsageManager::processUsage(Item* item, Object* target) {
@@ -204,6 +232,15 @@ bool UsageManager::processUsage(Item* item, Object* target) {
 		if (!target) return false;
 		else if (*target == items.at(LAMP_SOCKET)) lampToSocket(item, target);
 		else return false;
+	}
+	else if (*item == items.at(COIN_ON_A_STRING)) {
+		if (!target) return false;
+		else if (*target == items.at(WARDROBE)) coinToWardrobe();
+		else return false;
+	}
+	else if (*item == items.at(SCREWDRIVER)) {
+		if (!target) return false;
+		else if (*target == items.at(DOOR)) screwdriverToDoor(target);
 	}
 	else return false;
 

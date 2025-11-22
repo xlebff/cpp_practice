@@ -23,7 +23,7 @@ public:
 	static void setCurrentRoom(Room* room);
 
 	static Room* getRoom(const std::string& objName);
-	static bool setAvailability(const std::string& roomName, const bool available);
+	static bool setAvailability(int fromRoom, int toRoom, const bool available);
 	static bool isAvailable(const std::string& roomName);
 
 	int getIndex() const;

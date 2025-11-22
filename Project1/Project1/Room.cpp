@@ -11,8 +11,8 @@ vector<bool> Room::availableRooms;
 enum roomIndexes { BEDROOM, LIVINGROOM, KITCHEN, BATHROOM, BALCONY };
 const int roomsCount = 5;
 
-const vector<vector<bool>> availableForEachRoom = {
-    { false, true, false, false, true },
+vector<vector<bool>> availableForEachRoom = {
+    { false, true, false, false, false },
     { true, false, true, true, false },
     { false, true, false, true, false },
     { false, true, true, false, false },
@@ -78,7 +78,8 @@ void Room::initializeRooms() {
                 new Item("Pencil", "A standard yellow pencil with a sharp tip."),
                 new Item("Lamp", "A new, unpacked light bulb."),
                 new Item("Phone", "Your smartphone. The battery is at 25%."),
-                new Object("Wardrobe", "A tall wooden wardrobe with two doors. It seems to contain your clothes and other personal items.")
+                new Object("Wardrobe", "A tall wooden wardrobe with two doors. It seems to contain your clothes and other personal items."),
+                new Object("Door", "The jammed door to the balcony.")
             },
             true),
 
@@ -88,7 +89,6 @@ void Room::initializeRooms() {
                 new Object("Sofa", "A comfortable-looking sofa with soft cushions. Perfect for relaxing after a long day."),
                 new Item("Note",
                     "You unfold the note and read: \"Dear roommate, I borrowed your sock for a art project. Check the balcony! - Cat Vasya\""),
-                new Item("Coin", "A shiny gold coin. It looks quite ordinary."),
                 new Item("Sports sock", "A clean white sports sock with blue stripes at the top.")
             }, 
             true),
@@ -142,15 +142,12 @@ Room* Room::getRoom(const string& name) {
     return nullptr;
 }
 
-bool Room::setAvailability(const string& roomName, bool available) {
-    for (size_t i = 0; i < allRooms.size(); ++i) {
-        if (*allRooms[i] == roomName) {
-            availableRooms[i] = available;
-            return true;
-        }
-        else continue;
+bool Room::setAvailability(int fromRoom, int toRoom, const bool available) {
+    if (fromRoom >= 0 && fromRoom < roomsCount && 
+        toRoom >= 0 && toRoom < roomsCount) {
+        availableForEachRoom[fromRoom][toRoom] = available;
+        return true;
     }
-
     return false;
 }
 
