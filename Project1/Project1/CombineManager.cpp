@@ -10,7 +10,10 @@ static void yarnWithCat(Item* item0, Item* item1) {
 	inventory->removeItem(item1);
 	delete item1;
 
-	inventory->addItem(new Item("Coin on a string", "A coin tied on a woolen thread. But why..?"));
+	inventory->addItem(new Item("Coin on a string", 
+		"A coin tied on a woolen thread. But why..?"));
+
+	cout << "You tied a coin to a string... Why did you do that?" << endl;
 }
 
 bool CombineManager::processCombine(Item* item0, Item* item1) {

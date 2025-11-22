@@ -292,19 +292,22 @@ void Facade::showInventory() {
 
 Item* parseItem(vector<string> args, int* index) {
     Inventory* inventory = Inventory::getInstance();
-
     Item* item = nullptr;
-    string itemName = args[0];
 
-    for (; *index <= args.size(); ++(*index)) {
+    while (*index < args.size()) {
+        string itemName = args[*index];
         item = inventory->getItem(itemName);
+
         if (!item) {
             string word = args[*index];
             word[0] = tolower(word[0]);
             word = " " + word;
             itemName += word;
+            ++(*index);
         }
-        else break;
+        else {
+            break;
+        }
     }
 
     return item;
@@ -315,8 +318,8 @@ bool Facade::combineItems(vector<string> args) {
     Item* item1 = nullptr;
 
     string itemName = args[0];
+    int index = 0;
 
-    int index = 1;
     item0 = parseItem(args, &index);
 
     if (!item0) {
@@ -325,7 +328,7 @@ bool Facade::combineItems(vector<string> args) {
     }
     else;
 
-    if (index < args.size() && args[index] == "With") {
+    if (++index < args.size() && args[index] == "With") {
         ++index;
         item1 = parseItem(args, &index);
 
@@ -352,33 +355,32 @@ bool Facade::useItem(vector<string> args) {
     Item* item = nullptr;
     Object* target = nullptr;
 
-    string itemName = args[0];
-
-    int index = 1;
+    int index = 0;
     item = parseItem(args, &index);
 
     if (!item) {
-        cout << "You don`t have the " << itemName << "." << endl;
+        cout << "You don`t have that item." << endl;
         return false;
     }
     else;
 
-    if (index < args.size() && args[index] == "To") {
+    if (++index < args.size() && args[index] == "To") {
         ++index;
 
         if (index < args.size()) {
             Room* room = Room::getCurrentRoom();
-
             string objectName = args[index];
 
-            for (; index < args.size(); ++index) {
+            while (index < args.size()) {
                 target = room->findObject(objectName);
+
                 if (!target) {
                     if (index + 1 < args.size()) {
                         string word = args[index + 1];
                         word[0] = tolower(word[0]);
                         word = " " + word;
                         objectName += word;
+                        ++index;
                     }
                     else break;
                 }
@@ -386,14 +388,16 @@ bool Facade::useItem(vector<string> args) {
             }
         }
         else;
-    } 
+    }
     else;
 
     if (!UsageManager::processUsage(item, target)) {
         cout << "You can`t use your item this way." << endl;
         return false;
     }
-    else return true;
+    else {
+        return true;
+    }
 }
 
 int Facade::updateTurns() {
