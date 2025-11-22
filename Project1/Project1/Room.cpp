@@ -102,7 +102,13 @@ void Room::initializeRooms() {
                 new Object("Flower", "A disgruntled flower... The soil is completely dry!")
             }),
 
-        new Room("Bathroom", "A dark bathroom. The light bulb burned out yesterday, so you can't see anything."),
+        new Room("Bathroom", "A dark bathroom. The light bulb burned out yesterday, so you can't see anything.",
+            {
+                new Object("Clothesline", 
+                    "A drying clothesline stretched across the balcony. A single striped sock hangs from it, swaying gently in the breeze."
+                    "\nIt's too high to reach..."),
+                new Object("Stool", "A small but very sturdy stool. It's uncomfortable to sit, but you can use it if something is too high.")
+            }),
 
         new Room("Balcony", 
             "A balcony with a nice view of the street.", 

@@ -2,105 +2,54 @@
 
 using namespace std;
 
+/* The names of the text commands and their corresponding numbers */
 const string commands[] = {
-    "quit",
     "help",
     "go to",
     "look around",
-    "take",
     "look at",
     "show inventory",
+    "take",
     "drop",
     "use",
     "combine",
-    "decombine"
+    "decombine",
+    "quit"
 };
 
-enum commandsNum { 
-    QUIT,
+const enum commandsNum {
     HELP,
     GO_TO,
     LOOK_AROUND,
-    TAKE,
     LOOK_AT,
     SHOW_INVENTORY,
+    TAKE,
     DROP,
     USE,
     COMBINE,
-    DECOMBINE
+    DECOMBINE,
+    QUIT
 };
 
+/* Facade initialization */
 Facade* Facade::instance = nullptr;
 
-Facade::Facade() {
-    turns = 0;
-    maxTurns = 50;
-
-    lightTurns = 0;
-    maxLightTurns = 10;
-}
+// ==================== Singleton Pattern ====================
 
 Facade* Facade::getInstance() {
     if (!instance) instance = new Facade();
-    else;
     return instance;
 }
 
-bool Facade::isCommand(string& curCmd) {
-    for (string cmd : commands) {
-        if (curCmd == cmd) return true;
-        else continue;
-    }
-
-    return false;
+Facade::Facade(const int maxTurns, const int maxLightTurns)
+    : maxTurns(maxTurns), maxLightTurns(maxLightTurns)
+{
+    turns = 0;
+    lightTurns = 0;
+    Room::initializeRooms();
 }
 
-bool Facade::parseInput(string& input, string& action, vector<string>& args) {
-    for (char& c : input) c = tolower(c);
-
-    istringstream stream(input);
-    string token;
-
-    if (stream >> token) {
-        action = token;
-
-        if (!isCommand(action)) {
-            string nextToken;
-            if (stream >> nextToken) {
-                action += " " + nextToken;
-                if (!isCommand(action)) return false;
-                else;
-            }
-            else return false;
-        }
-
-        while (stream >> token) {
-            if (!token.empty()) {
-                token[0] = toupper(token[0]);
-                for (size_t i = 1; i < token.size(); ++i) token[i] = tolower(token[i]);
-            }
-            else;
-            args.push_back(token);
-        }
-        return true;
-    }
-    return false;
-}
-
-string Facade::combineArgs(const vector<string>& args) {
-    stringstream ss;
-    for (size_t i = 0; i < args.size(); ++i) {
-        if (i > 0) {
-            ss << " ";
-            string word = args[i];
-            if (!word.empty()) word[0] = tolower(word[0]);
-            else;
-            ss << word;
-        }
-        else ss << args[i];
-    }
-    return ss.str();
-}
+// ==================== Game Flow Methods ====================
 
 bool Facade::processInput(string& input) {
     string action;
@@ -118,10 +67,12 @@ bool Facade::processInput(string& input) {
         else if (action == commands[USE]) useItem(args);
         else if (action == commands[COMBINE]) combineItems(args);
         else {
-            cout << "Unknown command or missing arguments: '" << action << "'" << endl;
+            cout << "Wrong or missing arguments for \"" << action << "\"" << endl;
             cout << "Type 'help' to see available actions." << endl;
             return true;
         }
+
+        updateTurns();
     }
     else {
         cout << "Unknown command: '" << input << "'" << endl;
@@ -129,13 +80,10 @@ bool Facade::processInput(string& input) {
         return true;
     }
 
-    updateTurns();
     return true;
 }
 
 void Facade::showWelcome() {
-    Room::initializeRooms();
-
     cout << "=== The Lost Sock Adventure ===" << endl
         << "You wake up and realize one of your favorite socks is missing!" << endl
         << "You can't leave the house with just one sock. Find the missing pair!" << endl
@@ -158,16 +106,51 @@ void Facade::showHelp() {
     cout << "quit                   - Exit the game\n";
 }
 
+void Facade::endGame() {
+    cout << "Thanks for playing!" << endl;
+
+    Room::cleanup();
+    Inventory::cleanup();
+
+    delete instance;
+    instance = nullptr;
+
+    exit(0);
+}
+
+// ==================== Game State Methods ====================
+
+int Facade::getTurns() { return turns; }
+
+int Facade::getMaxTurns() { return maxTurns; }
+
+bool Facade::trueEnding() {
+    Inventory* inventory = Inventory::getInstance();
+
+    if (inventory->getItem("Sock")) {
+        cout << "You did it! The couple was reunited. You went to work calmly." << endl;
+        cout << "True ending: Great day." << endl;
+
+        endGame();
+        return true;
+    }
+    else return false;
+}
+
+// ==================== Player Actions ====================
+
 bool Facade::moveTo(const string& roomName) {
     Room* room = Room::getRoom(roomName);
     if (!room) {
         cout << "There is no such room." << endl;
         return false;
     }
-    else;
+    else {
+        // continue execution
+    }
 
     if (Room::isAvailable(room->getName())) {
-        cout << "You`re going to the " << room->getName() << endl
+        cout << "You`re going to the " << room->getName() << "." << endl
             << room->getDesc() << endl;
         Room::setCurrentRoom(room);
         return true;
@@ -184,10 +167,12 @@ bool Facade::takeItem(const string& itemName) {
 
     Object* target = room->findObject(itemName);
     if (!target) {
-        cout << "There is no '" << itemName << "' here." << endl;
+        cout << "There is no \"" << itemName << "\" here." << endl;
         return false;
     }
-    else;
+    else {
+        // continue execution
+    }
 
     Item* itemTarget = dynamic_cast<Item*>(target);
     if (!itemTarget) {
@@ -200,18 +185,15 @@ bool Facade::takeItem(const string& itemName) {
         cout << "You're taking the " << target->getName() << "." << endl;
 
         if (*itemTarget == "Sock") trueEnding();
-        else;
 
         return true;
     }
-    else;
 
     return false;
 }
 
 bool Facade::dropItem(const string& itemName) {
     Inventory* inventory = Inventory::getInstance();
-
     Item* item = inventory->getItem(itemName);
 
     if (!item) {
@@ -222,15 +204,127 @@ bool Facade::dropItem(const string& itemName) {
         cout << "You can't throw the " << itemName << " away." << endl;
         return false;
     }
-    else;
 
     Room* room = Room::getCurrentRoom();
-
     inventory->removeItem(item);
     cout << "Now you don`t have the " << item->getName() << "." << endl;
     room->addObj(item);
 
     return true;
+}
+
+bool Facade::useItem(vector<string> args) {
+    Item* item = nullptr;
+    Object* target = nullptr;
+
+    // Special case for using stool
+    if (args[0] == "Stool" && args.size() == 1) {
+        Room* room = Room::getCurrentRoom();
+        if (!room->findObject("Sock"))
+            room->addObj(new Item("Sock", "Your other sock!"));
+        return true;
+    }
+
+    int index = 0;
+    item = parseItem(args, &index);
+
+    if (!item) {
+        cout << "You don`t have that item." << endl;
+        return false;
+    }
+
+    if (++index < args.size() && args[index] == "To") {
+        ++index;
+
+        if (index < args.size()) {
+            Room* room = Room::getCurrentRoom();
+            string objectName = args[index];
+
+            while (index < args.size()) {
+                target = room->findObject(objectName);
+
+                if (!target) {
+                    if (index + 1 < args.size()) {
+                        string word = args[index + 1];
+                        word[0] = tolower(word[0]);
+                        word = " " + word;
+                        objectName += word;
+                        ++index;
+                    }
+                    else break;
+                }
+                else break;
+            }
+        }
+    }
+
+    if (!UsageManager::processUsage(item, target)) {
+        cout << "You can`t use your item this way." << endl;
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+bool Facade::combineItems(vector<string> args) {
+    Item* item0 = nullptr;
+    Item* item1 = nullptr;
+
+    string itemName = args[0];
+    int index = 0;
+
+    item0 = parseItem(args, &index);
+
+    if (!item0) {
+        cout << "You don`t have the " << itemName << "." << endl;
+        return false;
+    }
+
+    if (++index < args.size() && args[index] == "With") {
+        ++index;
+        item1 = parseItem(args, &index);
+
+        if (!item1) {
+            cout << "Specify an item you want to combine " << item0->getName() << " with." << endl;
+            return false;
+        }
+    }
+    else {
+        cout << "Wrong syntaxis!" << endl;
+        return false;
+    }
+
+    if (!CombineManager::processCombine(item0, item1)) {
+        cout << "You can`t combine " << item0->getName()
+            << " with " << item1->getName() << "." << endl;
+        return false;
+    }
+    else return true;
+}
+
+bool Facade::inspect(const string& objectName) {
+    Room* room = Room::getCurrentRoom();
+    Object* target = room->findObject(objectName);
+
+    if (!target) {
+        cout << "There is no '" << objectName << "' here." << endl;
+        return false;
+    }
+
+    cout << target->getDesc() << endl;
+
+    // Special case: inspecting laundry basket reveals sports sock
+    if (*target == "Laundry basket")
+        room->addObj(new Item("Sports sock",
+            "A clean white sports sock with blue stripes at the top."));
+
+    return true;
+}
+
+void Facade::showInventory() {
+    Inventory* inventory = Inventory::getInstance();
+    inventory->display();
 }
 
 void Facade::lookAround() {
@@ -265,143 +359,68 @@ void Facade::lookAround() {
     cout << endl;
 }
 
-bool Facade::inspect(const string& objectName) {
-    Room* room = Room::getCurrentRoom();
+// ==================== Input Processing ====================
 
-    Object* target = room->findObject(objectName);
-    if (!target) {
-        cout << "There is no '" << objectName << "' here." << endl;
-        return false;
-    }
-    else;
+bool Facade::parseInput(string& input, string& action, vector<string>& args) {
+    // Convert entire input to lowercase for case-insensitive parsing
+    for (char& c : input) c = tolower(c);
 
-    cout << target->getDesc() << endl;
+    istringstream stream(input);
+    string token;
 
-    if (*target == "Laundry basket")
-        room->addObj(new Item("Sports sock",
-            "A clean white sports sock with blue stripes at the top."));
-    else;
+    if (stream >> token) {
+        action = token;
 
-    return true;
-}
-
-void Facade::showInventory() {
-    Inventory* inventory = Inventory::getInstance();
-    inventory->display();
-}
-
-Item* parseItem(vector<string> args, int* index) {
-    Inventory* inventory = Inventory::getInstance();
-    Item* item = nullptr;
-
-    string itemName;
-
-    for (; *index < args.size(); ++(*index)) {
-        if (itemName.empty()) itemName = args[*index];
-        else {
-            string word = args[*index];
-            word[0] = tolower(word[0]);
-            word = " " + word;
-            itemName += word;
-        }
-
-        item = inventory->getItem(itemName);
-        if (item) return item;
-    }
-
-    return item;
-}
-
-bool Facade::combineItems(vector<string> args) {
-    Item* item0 = nullptr;
-    Item* item1 = nullptr;
-
-    string itemName = args[0];
-    int index = 0;
-
-    item0 = parseItem(args, &index);
-
-    if (!item0) {
-        cout << "You don`t have the " << itemName << "." << endl;
-        return false;
-    }
-    else;
-
-    if (++index < args.size() && args[index] == "With") {
-        ++index;
-        item1 = parseItem(args, &index);
-
-        if (!item1) {
-            cout << "Specify an item you want to combine " << item0->getName() << " with." << endl;
-            return false;
-        }
-        else;
-    }
-    else {
-        cout << "Wrong syntaxis!" << endl;
-        return false;
-    }
-
-    if (!CombineManager::processCombine(item0, item1)) {
-        cout << "You can`t combine " << item0->getName()
-            << " with " << item1->getName() << "." << endl;
-        return false;
-    }
-    else return true;
-}
-
-bool Facade::useItem(vector<string> args) {
-    Item* item = nullptr;
-    Object* target = nullptr;
-
-    int index = 0;
-    item = parseItem(args, &index);
-
-    if (!item) {
-        cout << "You don`t have that item." << endl;
-        return false;
-    }
-    else;
-
-    if (++index < args.size() && args[index] == "To") {
-        ++index;
-
-        if (index < args.size()) {
-            Room* room = Room::getCurrentRoom();
-            string objectName = args[index];
-
-            while (index < args.size()) {
-                target = room->findObject(objectName);
-
-                if (!target) {
-                    if (index + 1 < args.size()) {
-                        string word = args[index + 1];
-                        word[0] = tolower(word[0]);
-                        word = " " + word;
-                        objectName += word;
-                        ++index;
-                    }
-                    else break;
-                }
-                else break;
+        // Check for two-word commands
+        if (!isCommand(action)) {
+            string nextToken;
+            if (stream >> nextToken) {
+                action += " " + nextToken;
+                if (!isCommand(action)) return false;
             }
+            else return false;
         }
-        else;
-    }
-    else;
 
-    if (!UsageManager::processUsage(item, target)) {
-        cout << "You can`t use your item this way." << endl;
-        return false;
-    }
-    else {
+        // Process arguments with proper capitalization
+        while (stream >> token) {
+            if (!token.empty()) {
+                token[0] = toupper(token[0]);
+                for (size_t i = 1; i < token.size(); ++i) token[i] = tolower(token[i]);
+            }
+            args.push_back(token);
+        }
         return true;
     }
+    return false;
 }
+
+bool Facade::isCommand(string& curCmd) {
+    for (string cmd : commands) {
+        if (curCmd == cmd) return true;
+    }
+    return false;
+}
+
+string Facade::combineArgs(const vector<string>& args) {
+    stringstream ss;
+    for (size_t i = 0; i < args.size(); ++i) {
+        if (i > 0) {
+            ss << " ";
+            string word = args[i];
+            if (!word.empty()) word[0] = tolower(word[0]);
+            ss << word;
+        }
+        else ss << args[i];
+    }
+    return ss.str();
+}
+
+// ==================== Turn Management ====================
 
 int Facade::updateTurns() {
     ++turns;
 
+    // Update flashlight usage if active
     if (UsageManager::isFlashlightOn) {
         ++lightTurns;
 
@@ -421,10 +440,9 @@ int Facade::updateTurns() {
 
             delete phone;
         }
-        else;
     }
-    else;
 
+    // Check for game over due to time limit
     if (turns >= maxTurns) {
         Inventory* inventory = Inventory::getInstance();
 
@@ -432,14 +450,12 @@ int Facade::updateTurns() {
             if (inventory->getItem("Other sports sock")) {
                 cout << "You're late! In a hurry, you decide to go in a pair of sports"
                     << " socks. The boss will be unhappy!" << endl;
-
                 cout << "Good ending: The wrong pair." << endl;
             }
             else {
                 cout << "You're late! In your haste, you decide to wear different socks."
                     << " How awful! It's completely unacceptable, "
                     << "but there's nothing you can do about it..." << endl;
-
                 cout << "Bad ending: Tasteless and terribly disorganized." << endl;
             }
         }
@@ -447,43 +463,40 @@ int Facade::updateTurns() {
             cout << "Horrible! You don't even have a sock! "
                 << "You'll have to run to the store, but that will take a long time."
                 << endl;
-
             cout << "Bad ending: Seriously late." << endl;
         }
 
         endGame();
     }
-    else;
-    
+
     return turns;
 }
 
-int Facade::getTurns() { return turns; }
-int Facade::getMaxTurns() { return maxTurns; }
+// ==================== Helper Functions ====================
 
-bool Facade::trueEnding() {
+/**
+ * @brief Parse item name from command arguments
+ * @param args Vector of command arguments
+ * @param index Current index in arguments (will be updated)
+ * @return Pointer to found item, or nullptr if not found
+ */
+Item* parseItem(vector<string> args, int* index) {
     Inventory* inventory = Inventory::getInstance();
+    Item* item = nullptr;
+    string itemName;
 
-    if (inventory->getItem("Sock")) {
-        cout << "You did it! The couple was reunited. You went to work calmly."
-            << endl;
+    for (; *index < args.size(); ++(*index)) {
+        if (itemName.empty()) itemName = args[*index];
+        else {
+            string word = args[*index];
+            word[0] = tolower(word[0]);
+            word = " " + word;
+            itemName += word;
+        }
 
-        cout << "True ending: Great day." << endl;
-
-        endGame();
-        return true;
+        item = inventory->getItem(itemName);
+        if (item) return item;
     }
-    else return false;
-}
 
-void Facade::endGame() {
-    cout << "Thanks for playing!" << endl;
-
-    Room::cleanup();
-    Inventory::cleanup();
-
-    delete instance;
-    instance = nullptr;
-
-    exit(0);
+    return item;
 }

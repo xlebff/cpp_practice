@@ -193,6 +193,8 @@ static void screwdriverToDoor(Object* target) {
 
 	room->removeObj(target);
 	delete target;
+
+	Room::setCurrentRoom(room);
 }
 
 bool UsageManager::processUsage(Item* item, Object* target) {
