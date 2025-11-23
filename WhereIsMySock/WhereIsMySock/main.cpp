@@ -5,7 +5,6 @@ using namespace std;
 
 int main() {
     Facade* game = Facade::getInstance();
-    game->showWelcome();
 
     string input;
     bool running = true;
@@ -16,6 +15,6 @@ int main() {
         else continue;
     }
 
-    game->endGame();
+    game->quitGame();
     return 0;
 }

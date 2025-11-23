@@ -18,33 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Facade.h" />
-    <ClInclude Include="Inventory.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Room.h" />
-    <ClInclude Include="SerialPrint.h" />
-    <ClInclude Include="UsageManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CombineManager.cpp" />
-    <ClCompile Include="CombineManager.h" />
-    <ClCompile Include="Facade.cpp" />
-    <ClCompile Include="Inventory.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="AllObjs.h" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="SerialPrint.cpp" />
-    <ClCompile Include="UsageManager.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f8fac737-79e3-4e0a-9d83-ae17f692a539}</ProjectGuid>
-    <RootNamespace>Project1</RootNamespace>
+    <ProjectGuid>{0afe9fdb-16df-431b-a38a-c1b2dbd8a258}</ProjectGuid>
+    <RootNamespace>WhereIsMySock</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -124,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +123,28 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CombineManager.h" />
+    <ClInclude Include="Facade.h" />
+    <ClInclude Include="Flags.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="SerialPrint.h" />
+    <ClInclude Include="UsageManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CombineManager.cpp" />
+    <ClCompile Include="Facade.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SerialPrint.cpp" />
+    <ClCompile Include="UsageManager.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <cstring>
 
 /* #define LINUX */
 
-#ifndef WINDOWS || LINUX
+#ifndef WINDOWS
 #define WINDOWS
 #endif
 
@@ -22,4 +23,7 @@ namespace SerialPrint {
 
 	void serialPrintln(const std::string& msg, int delay = 25);
 	void serialPrintln(const char* msg, int delay = 25);
+
+	void setColor(const std::string& color);
+	void resetColor();
 }

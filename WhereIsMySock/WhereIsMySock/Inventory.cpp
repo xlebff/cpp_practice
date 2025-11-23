@@ -1,8 +1,7 @@
-#include <iostream>
-#include <algorithm>
 #include "Inventory.h"
 
 using namespace std;
+using namespace SerialPrint;
 
 Inventory* Inventory::instance = nullptr;
 
@@ -35,7 +34,7 @@ vector<Item*> Inventory::getItems() const { return items; }
 
 bool Inventory::addItem(Item* item) {
 	if (items.size() == capacity) {
-		cout << "The inventory is overflowing!" << endl;
+		serialPrintln("The inventory is overflowing!");
 		return false;
 	}
 	else {
@@ -67,13 +66,16 @@ Item* Inventory::getItem(const string& itemName) const {
 }
 
 void Inventory::display() {
-	cout << "Capacity: " << items.size() << "/" << capacity << endl;
+	serialPrintln("Capacity: " + to_string(items.size()) + 
+		"/" + to_string(capacity));
 
 	if (!items.empty()) {
 		for (size_t i = 0; i < items.size(); ++i) {
-			cout << "  " << (i + 1) << ". " << items[i]->getName()
-				<< " - " << items[i]->getDesc() << endl;
+			serialPrintln("  " + to_string(i + 1) + 
+				". " + items[i]->getName() + " - " + items[i]->getDesc());
 		}
 	}
-	else;
+	else {
+		// continue execution
+	}
 }

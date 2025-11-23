@@ -1,5 +1,4 @@
 #include "Object.h"
-#include <algorithm>
 
 using namespace std;
 
