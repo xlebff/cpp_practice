@@ -9,7 +9,7 @@
 #define WINDOWS
 #endif
 
-#ifdef WINDOWS
+#ifdef WINDOWS || LINUX
 	#include <windows.h>
 	#define sleep(seconds) Sleep((seconds))
 #else
